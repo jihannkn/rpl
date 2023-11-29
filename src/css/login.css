@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: url(../../public/assets/image/bg.png);
+  background-size: cover;
+}
+
+section {
+  padding: 97px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Lexend", sans-serif;
+}
+
+.riyot {
+  padding: 50px 85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #000000c2;
+}
+
+.logo img {
+  width: 100px;
+}
+
+.logcre {
+  width: 230px;
+  margin-top: 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #f0f0f0d2;
+}
+
+.logcre h2 {
+  font-size: 12px;
+}
+
+.form {
+  margin-top: 15px;
+}
+
+.form input {
+  width: 231px;
+  height: 32px;
+  padding: 12px;
+  background: #f0f0f0d2;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  color: #101010;
+  font-size: 11px;
+  font-family: "Lexend", sans-serif;
+}
+
+.form input::placeholder {
+  color: #101010;
+}
+
+.pas {
+  margin-top: 6px;
+}
+
+.remfor {
+  width: 230px;
+  margin-top: 7px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #f0f0f0d2;
+}
+
+.rimem {
+  display: flex;
+  align-items: center;
+}
+
+.rimem input[type="checkbox"] {
+  accent-color: #f0f0f0d2;
+}
+
+.remfor label {
+  margin-left: 5px;
+  font-size: 10px;
+}
+
+.forpas a {
+  color: #f0f0f0d2;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.conti {
+  margin-top: 28px;
+}
+
+.conti button {
+  padding: 9px 58px;
+  border: none;
+  border-radius: 20px;
+  background-color: #f0f0f0d2;
+  color: #101010;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
