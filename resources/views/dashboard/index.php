@@ -1,6 +1,10 @@
 <?php 
+session_start();
 require('../../../app/Http/Conrtoller/Controller.php');
-
+if (!isset($_SESSION["login"])) {
+    header("Location: http://localhost/web-rpl/");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
@@ -100,7 +104,8 @@ require('../../../app/Http/Conrtoller/Controller.php');
               <div class="profile_name">Prem Shahi</div>
               <div class="job">Web Desginer</div>
             </div>
-			<a href="localhost/web-rpl/resource/views/logout/"><i class="bx bx-log-out"></i></a>
+			<!-- Log Out -->
+			<a href="http://localhost/web-rpl/resources/views/logout"><i class="bx bx-log-out"></i></a>
           </div>
         </li>
       </ul>

@@ -1,18 +1,37 @@
 <?php
+session_start();
 require('./app/Http/Conrtoller/Controller.php');
-$user = dataStore("SELECT * FROM users")[0];
+$user = getDatas("SELECT * FROM users")[0];
+
+if (isset($_COOKIE["id"]) && isset($_COOKIE["key"])) {
+  $id = $_COOKIE["id"];
+  $key = $_COOKIE["key"];
+  if ($key === hash("sha224", getDatas("SELECT * FROM user WHERE id = '$id'")[0]["email"])) {
+      $_SESSION["login"] = true;
+  }
+}
+
+if(isset($_SESSION["login"])) {
+  header("Location: http://localhost/web-rpl/resources/views/dashboard/");
+}
 
 if(isset($_POST["login"])) {
   $email = $_POST["email"];
   $password = $_POST["password"];
 
   if ($user) {
-    if($password == $user["password"]) {
+    if(password_verify($password, $user["password"])) {
+      $_SESSION["login"] = true;
+      if(isset($_POST["remember"])){
+        setcookie("id", $user["user_id"], time() + 30000);
+        setcookie("key", hash("sha224", $user["email"], time() + 30000));
+      }
       header("Location: http://localhost/web-rpl/resources/views/dashboard/");
     } else {
       header("Location: http://localhost/web-rpl/");
     }
   }
+  exit;
 }
 
 ?>
@@ -41,7 +60,7 @@ if(isset($_POST["login"])) {
         </div>
         <div class="form">
           <div class="user">
-            <input type="email" name="email" id="email"  placeholder="Username" value=""/>
+            <input type="email" name="email" id="email"  placeholder="Email" value=""/>
           </div>
           <div class="pas">
             <input type="password" name="password" id="password" placeholder="Password" value=""/>
@@ -49,7 +68,7 @@ if(isset($_POST["login"])) {
         </div>
         <div class="remfor">
           <div class="rimem">
-            <input id="chek" type="checkbox" />
+            <input id="chek" type="checkbox" name="remember" id="remember"/>
             <label for="chek">Remember me</label>
           </div>
           <div class="forpas">
