@@ -1,3 +1,7 @@
+<?php 
+require('../../../app/Http/Conrtoller/Controller.php');
+
+?>
 <!DOCTYPE html>
 <!-- Designined by CodingLab | www.youtube.com/codinglabyt -->
 <html lang="en" dir="ltr">
@@ -96,7 +100,7 @@
               <div class="profile_name">Prem Shahi</div>
               <div class="job">Web Desginer</div>
             </div>
-            <i class="bx bx-log-out"></i>
+			<a href="localhost/web-rpl/resource/views/logout/"><i class="bx bx-log-out"></i></a>
           </div>
         </li>
       </ul>
