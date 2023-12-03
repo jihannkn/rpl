@@ -2,7 +2,7 @@
 
 $connection = mysqli_connect('localhost', 'root', '', 'manajemen');
 
-function dataStore($query) {
+function getDatas($query) {
     global $connection;
     $data = [];
     $response = mysqli_query($connection, $query);
@@ -12,3 +12,14 @@ function dataStore($query) {
     return $data;
 }
 
+
+function storeData() {
+    global $connection;
+    $table = "CONTOH";
+    $data1 = $_POST["data_1"];
+    $data2 = $_POST["data_2"];
+
+    $query = "INSERT INTO $table VALUES ('$data1','$data2')";
+    mysqli_query($connection, $query);
+    return mysqli_affected_rows($connection);
+}
