@@ -23,3 +23,19 @@ function storeData() {
     mysqli_query($connection, $query);
     return mysqli_affected_rows($connection);
 }
+
+function updateBatu() {
+    global $connection;
+    $table = 'stok';
+
+    $jenis = $_POST["jenis"];
+    $jumlahBaru = $_POST["jumlah"];
+    
+    $stones = getDatas("SELECT * FROM stok WHERE jenis = '$jenis'")[0];
+    $jumlahAwal = $stones["jumlah"];
+    $jumlahAkhir = $jumlahBaru + $jumlahAwal;
+
+    $query = "UPDATE $table SET jumlah = '$jumlahAkhir' WHERE jenis = '$jenis'";
+    mysqli_query($connection, $query);
+    return mysqli_affected_rows($connection);
+}
