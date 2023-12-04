@@ -69,11 +69,13 @@
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Header</th>
-								<th scope="col">Header</th>
-								<th scope="col">Header</th>
-								<th scope="col">Header</th>
+								<th scope="col">No</th>
+								<th scope="col">Tanggal Transaksi</th>
+								<th scope="col">Admin</th>
+								<th scope="col">Nama Customer</th>
+								<th scope="col">Jenis Batu</th>
+								<th scope="col">Jumlah Pembelian</th>
+								<th scope="col">Total</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -83,6 +85,8 @@
 								<td>data</td>
 								<td>placeholder</td>
 								<td>text</td>
+								<td>sdf</td>
+								<td>dfd</td>
 							</tr>
 						</tbody>
 					</table>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2023 at 12:16 AM
+-- Generation Time: Dec 03, 2023 at 08:31 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `manajemen`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stok`
+--
+
+CREATE TABLE `stok` (
+  `id` int(11) NOT NULL,
+  `jenis` varchar(255) NOT NULL,
+  `jumlah` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stok`
+--
+
+INSERT INTO `stok` (`id`, `jenis`, `jumlah`) VALUES
+(1, 'ziolit', '22'),
+(2, 'balok', '22');
 
 -- --------------------------------------------------------
 
@@ -48,10 +68,26 @@ INSERT INTO `users` (`user_id`, `full_name`, `email`, `password`) VALUES
 --
 
 --
+-- Indexes for table `stok`
+--
+ALTER TABLE `stok`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `stok`
+--
+ALTER TABLE `stok`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

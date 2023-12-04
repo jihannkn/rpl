@@ -70,11 +70,31 @@ $stones = getDatas("SELECT * FROM stok");
 					<h1 class="h2">Dashboard</h1>
 					<a href="http://localhost/web-rpl/resources/views/dashboard/create/" class="btn btn-primary btn-md">Tambah Stok</a>
 				</div>
+				<div class="row">
+					<div class="col-sm-6 mb-3 mb-sm-0">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">Special title treatment</h5>
+								<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="card">
+							<div class="card-body">
+								<h5 class="card-title">Special title treatment</h5>
+								<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+								<a href="#" class="btn btn-primary">Go somewhere</a>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="table-responsive">
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
-								<th scope="col">NO</th>
+								<th scope="col">No</th>
 								<th scope="col">Jenis</th>
 								<th scope="col">Jumlah</th>
 							</tr>
@@ -83,10 +103,10 @@ $stones = getDatas("SELECT * FROM stok");
 							<?php foreach ($stones as $index => $stone) : ?>
 								<tr>
 									<td><?php echo $index + 1 ?></td>
-									<td><?php echo $stone['jenis'] ?></td>
-									<td><?php echo $stone['jumlah'] ?></td>
+									<td><?php echo $stone['jenis_batu'] ?></td>
+									<td><?php echo $stone['jumlah_stok'] ?></td>
 								</tr>
-								<?php endforeach; ?>
+							<?php endforeach; ?>
 						</tbody>
 					</table>
 				</div>
