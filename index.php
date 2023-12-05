@@ -8,20 +8,20 @@ if (isset($_COOKIE["id"]) && isset($_COOKIE["key"])) {
   $key = $_COOKIE["key"];
   if ($key === hash("sha224", getDatas("SELECT * FROM user WHERE id = '$id'")[0]["email"])) {
       $_SESSION["login"] = true;
+    }
   }
-}
-
-if(isset($_SESSION["login"])) {
+  
+  if(isset($_SESSION["login"])) {
   header("Location: http://localhost/web-rpl/resources/views/dashboard/");
 }
 
 if(isset($_POST["login"])) {
   $email = $_POST["email"];
   $password = $_POST["password"];
-
   if ($user) {
     if(password_verify($password, $user["password"])) {
       $_SESSION["login"] = true;
+      $_SESSION['user'] = $user;
       if(isset($_POST["remember"])){
         setcookie("id", $user["user_id"], time() + 30000);
         setcookie("key", hash("sha224", $user["email"], time() + 30000));
