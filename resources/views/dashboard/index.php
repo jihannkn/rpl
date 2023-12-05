@@ -1,6 +1,7 @@
 <?php
+session_start();
 require('../../../app/Http/Conrtoller/Controller.php');
-$stones = getDatas("SELECT * FROM stok");
+$stones = getDatas("SELECT * FROM stocks");
 ?>
 <!doctype html>
 <html lang="en">
@@ -103,7 +104,7 @@ $stones = getDatas("SELECT * FROM stok");
 							<?php foreach ($stones as $index => $stone) : ?>
 								<tr>
 									<td><?php echo $index + 1 ?></td>
-									<td><?php echo $stone['jenis_batu'] ?></td>
+									<td><?php echo $stone['jenis'] ?></td>
 									<td><?php echo $stone['jumlah_stok'] ?></td>
 								</tr>
 							<?php endforeach; ?>

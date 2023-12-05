@@ -2,7 +2,7 @@
 require('../../../../app/Http/Conrtoller/Controller.php');
 
 if (isset($_POST["tambah"])) {
-    if (updateBatu()) {
+    if (updateStocks()) {
         header("Location: http://localhost/web-rpl/resources/views/dashboard/");
     }
 }
@@ -21,10 +21,10 @@ if (isset($_POST["tambah"])) {
     <form method="post">
         <div>
             <label for="jenis_batu">Jenis Batu</label>
-            <select name="jenis_batu" id="jenis">
+            <select name="jenis" id="jenis">
                 <option value="" active>Jenis Batu</option>
-                <option value="ziolit">Zeolite</option>
-                <option value="balok">Balok</option>
+                <option value="Zeolite">Zeolite</option>
+                <option value="Balok">Balok</option>
             </select>
         </div>
         <div>

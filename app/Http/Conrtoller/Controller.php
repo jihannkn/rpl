@@ -1,6 +1,6 @@
 <?php
 
-$connection = mysqli_connect('localhost', 'root', '', 'manajemen');
+$connection = mysqli_connect('localhost', 'root', '', 'bumipersada');
 
 function getDatas($query)
 {
@@ -26,19 +26,22 @@ function storeData()
     return mysqli_affected_rows($connection);
 }
 
-function updateBatu()
+function updateStocks()
 {
+    // echo $_POST['jenis'];
+    // die;
     global $connection;
-    $table = 'stok';
+    $table = 'stocks';
 
-    $jenis = $_POST["jenis_batu"];
+    $jenis = $_POST["jenis"];
     $jumlahBaru = $_POST["jumlah_stok"];
 
-    $stones = getDatas("SELECT * FROM stok WHERE jenis_batu = '$jenis'")[0];
+    $stones = getDatas("SELECT * FROM stocks WHERE jenis = '$jenis'")[0];
+
     $jumlahAwal = $stones["jumlah_stok"];
     $jumlahAkhir = $jumlahBaru + $jumlahAwal;
 
-    $query = "UPDATE $table SET jumlah_stok = '$jumlahAkhir' WHERE jenis_batu = '$jenis'";
+    $query = "UPDATE $table SET jumlah_stok = '$jumlahAkhir' WHERE jenis = '$jenis'";
     mysqli_query($connection, $query);
     return mysqli_affected_rows($connection);
 }
