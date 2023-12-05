@@ -17,10 +17,16 @@ $user = $_SESSION['user'];
 <body>
     <section>
         <?php foreach ($stocks as $key => $stock) : ?>
-            <div class="card">
-                <h1><?php echo $stock["jenis"] ?></h1>
-                <img src="../../../public/assets/image/balok.jpg" alt="">
-                <a href="http://localhost/web-rpl/resources/views/beranda/payment?stock_id=<?=$stock["id"]?>">Go</a>
+            <div class="plan">
+                <div class="inner">
+                    <span class="pricing">
+                        <span> <?php echo $stock["jenis"] ?> </span>
+                    </span>
+                    <img src="../../../public/assets/image/batu<?= $key + 1 ?>.jpg" alt="" />
+                    <div class="action">
+                        <a class="button" href="http://localhost/web-rpl/resources/views/beranda/payment?stock_id=<?= $stock["id"] ?>"> Buy Now </a>
+                    </div>
+                </div>
             </div>
         <?php endforeach; ?>
     </section>
