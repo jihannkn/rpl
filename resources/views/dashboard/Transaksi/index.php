@@ -5,6 +5,11 @@ if (!isset($_SESSION['login'])) {
 	header('Location: http://localhost/web-rpl/');
 	exit;
 }
+$transactions = getDatas("SELECT * FROM transactions");
+function getCustomer ($id) {
+	$customers = getDatas("SELECT * FROM users WHERE id = '$id'")[0];
+	return $customers["name"];
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -31,7 +36,7 @@ if (!isset($_SESSION['login'])) {
 		<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
 		<div class="navbar-nav">
 			<div class="nav-item text-nowrap">
-			<a class="nav-link px-3" href="http://localhost/web-rpl/resources/views/logout/">Sign out</a>
+				<a class="nav-link px-3" href="http://localhost/web-rpl/resources/views/logout/">Sign out</a>
 			</div>
 		</div>
 	</header>
@@ -54,15 +59,15 @@ if (!isset($_SESSION['login'])) {
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="http://localhost/web-rpl/resources/views/dashboard/laporan/">
-								<span data-feather="home"></span>
-								Laporan
-							</a>
-						</li>
-						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" href="http://localhost/web-rpl/resources/views/dashboard/transaksi/">
 								<span data-feather="home"></span>
 								Transaksi
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="http://localhost/web-rpl/resources/views/dashboard/laporan/">
+								<span data-feather="home"></span>
+								Laporan
 							</a>
 						</li>
 					</ul>
@@ -80,24 +85,22 @@ if (!isset($_SESSION['login'])) {
 								<th scope="col">No</th>
 								<th scope="col">Jenis batu</th>
 								<th scope="col">ID Customer</th>
-								<th scope="col">ID Admin</th>
 								<th scope="col">Tanggal</th>
 								<th scope="col">Jumlah Pembelian</th>
-								<th scope="col">Harga</th>
 								<th scope="col">Total</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1,001</td>
-								<td>random</td>
-								<td>data</td>
-								<td>placeholder</td>
-								<td>text</td>
-								<td>asdd</td>
-								<td>sd</td>
-								<td>dsfsd</td>
-							</tr>
+							<?php foreach ($transactions as $key => $value) : ?>
+								<tr>
+									<td><?= $key + 1 ?></td>
+									<td><?= $value["jenis_batu"] ?></td>
+									<td><?= getCustomer($value["user_id"]) ?></td>
+									<td><?= $value["tanggal"] ?></td>
+									<td><?= $value["jumlah"] ?></td>
+									<td><?= $value["total"] ?></td>
+								</tr>
+							<?php endforeach; ?>
 						</tbody>
 					</table>
 				</div>

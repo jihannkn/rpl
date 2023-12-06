@@ -51,7 +51,6 @@ $stones = getDatas("SELECT * FROM stocks");
 		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
 		<div class="navbar-nav">
 			<div class="nav-item text-nowrap">
 				<a class="nav-link px-3" href="http://localhost/web-rpl/resources/views/logout/">Sign out</a>
@@ -61,31 +60,31 @@ $stones = getDatas("SELECT * FROM stocks");
 
 	<div class="container-fluid">
 		<div class="row">
-			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
 				<div class="position-sticky pt-3">
 					<ul class="nav flex-column">
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#">
+							<a class="nav-link active" aria-current="page" href="http://localhost/web-rpl/resources/views/dashboard/">
 								<span data-feather="home"></span>
 								Dashboard
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="./customer/">
+							<a class="nav-link" aria-current="page" href="http://localhost/web-rpl/resources/views/dashboard/customer/">
 								<span data-feather="home"></span>
 								Customer
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="./laporan/">
+							<a class="nav-link" aria-current="page" href="http://localhost/web-rpl/resources/views/dashboard/transaksi/">
 								<span data-feather="home"></span>
-								Laporan
+								Transaksi
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="./transaksi/">
+							<a class="nav-link" aria-current="page" href="http://localhost/web-rpl/resources/views/dashboard/laporan/">
 								<span data-feather="home"></span>
-								Transaksi
+								Laporan
 							</a>
 						</li>
 					</ul>
@@ -94,48 +93,20 @@ $stones = getDatas("SELECT * FROM stocks");
 
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="h2">Dashboard</h1>
-					<a href="http://localhost/web-rpl/resources/views/dashboard/create/" class="btn btn-primary btn-md">Tambah Stok</a>
+					<h1 class="h3">Dashboard</h1>
 				</div>
 				<div class="row">
-					<div class="col-sm-6 mb-3 mb-sm-0">
-						<div class="card">
-							<div class="card-body">
-								<h5 class="card-title">Special title treatment</h5>
-								<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-								<a href="#" class="btn btn-primary">Go somewhere</a>
+					<?php foreach ($stones as $index => $stone) : ?>
+						<div class="col-sm-6 mb-3 mb-sm-0">
+							<div class="card">
+								<div class="card-body">
+									<h5 class="card-title">Jenis Batu : <?= $stone["jenis"] ?></h5>
+									<p class="card-text">Jumlah Stock : <?= $stone["jumlah_stok"] ?> - TONO</p>
+									<a href="http://localhost/web-rpl/resources/views/dashboard/create?jenis=<?= $stone["jenis"] ?>" class="btn btn-primary">Tambah Stock</a>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-sm-6">
-						<div class="card">
-							<div class="card-body">
-								<h5 class="card-title">Special title treatment</h5>
-								<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-								<a href="#" class="btn btn-primary">Go somewhere</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="table-responsive">
-					<table class="table table-striped table-sm">
-						<thead>
-							<tr>
-								<th scope="col">No</th>
-								<th scope="col">Jenis</th>
-								<th scope="col">Jumlah</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php foreach ($stones as $index => $stone) : ?>
-								<tr>
-									<td><?php echo $index + 1 ?></td>
-									<td><?php echo $stone['jenis'] ?></td>
-									<td><?php echo $stone['jumlah_stok'] ?></td>
-								</tr>
-							<?php endforeach; ?>
-						</tbody>
-					</table>
+					<?php endforeach; ?>
 				</div>
 			</main>
 		</div>
