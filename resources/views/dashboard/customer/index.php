@@ -1,3 +1,24 @@
+<?php
+session_start();
+require("../../../../app/Http/Conrtoller/Controller.php");
+$customers = getDatas("SELECT
+users.id,
+users.name,
+users.email,
+users.email_verified_at,
+customers.alamat,
+customers.no_telp AS customer_no_telp,
+customers.created_at AS customer_created_at,
+customers.updated_at AS customer_updated_at
+FROM
+users
+JOIN
+customers ON users.id = customers.user_id;
+");
+// foreach ($customers as $key => $customer) {
+// 	echo $customer;
+// }
+?>
 <!doctype html>
 <html lang="en">
 
@@ -16,14 +37,14 @@
 <body>
 
 	<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Bumi Indah Persada</a>
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://localhost/web-rpl/resources/views/beranda">Bumi Indah Persada</a>
 		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
 		<div class="navbar-nav">
 			<div class="nav-item text-nowrap">
-				<a class="nav-link px-3" href="#">Sign out</a>
+			<a class="nav-link px-3" href="http://localhost/web-rpl/resources/views/logout/">Sign out</a>
 			</div>
 		</div>
 	</header>
@@ -70,20 +91,21 @@
 						<thead>
 							<tr>
 								<th scope="col">No</th>
-								<th scope="col">Header</th>
-								<th scope="col">Header</th>
-								<th scope="col">Header</th>
-								<th scope="col">Header</th>
+								<th scope="col">Nama Perusahaan</th>
+								<th scope="col">Alamat Perusahaan</th>
+								<th scope="col">Email</th>
+								<!-- <th scope="col">Header</th> -->
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1,001</td>
-								<td>random</td>
-								<td>data</td>
-								<td>placeholder</td>
-								<td>text</td>
-							</tr>
+							<?php foreach ($customers as $key => $customer) : ?>
+								<tr>
+									<td><?= $key + 1  ?></td>
+									<td><?= $customer["name"]  ?></td>
+									<td><?= $customer["alamat"]  ?></td>
+									<td><?= $customer["email"]  ?></td>
+								</tr>
+							<?php endforeach; ?>
 						</tbody>
 					</table>
 				</div>

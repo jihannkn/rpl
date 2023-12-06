@@ -2,7 +2,7 @@
 session_start();
 require('../../../app/Http/Conrtoller/Controller.php');
 $stocks = getDatas("SELECT * FROM stocks");
-$user = $_SESSION['user'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +15,7 @@ $user = $_SESSION['user'];
 </head>
 
 <body>
+<a class="nav-link px-3" href="http://localhost/web-rpl/resources/views/logout/">Sign out</a>
     <section>
         <?php foreach ($stocks as $key => $stock) : ?>
             <div class="plan">
