@@ -3,6 +3,7 @@ session_start();
 require('../../../../app/Http/Conrtoller/Controller.php');
 $stock_id = $_GET['stock_id'];
 $stock = getDatas("SELECT * FROM stocks WHERE id = '$stock_id'")[0];
+$user = $_SESSION['auth'];
 ?>
 
 <!DOCTYPE html>
@@ -17,9 +18,10 @@ $stock = getDatas("SELECT * FROM stocks WHERE id = '$stock_id'")[0];
 </head>
 
 <body>
+<a class="nav-link px-3" href="http://localhost/web-rpl/resources/views/logout/">Sign out</a>
     <section>
         <section>
-            <div class="kembali">
+            <a class="kembali" href="http://localhost/web-rpl/resources/views/beranda/">
                 <button>
                     <div class="svg-wrapper-1">
                         <div class="svg-wrapper">
@@ -31,20 +33,17 @@ $stock = getDatas("SELECT * FROM stocks WHERE id = '$stock_id'")[0];
                     </div>
                     <span>Back</span>
                 </button>
-            </div>
+            </a>
             <div class="payment">
                 <div class="left">
-                    <img src="../../../../public/assets/image/batu<?= $key + 1 ?>.jpg" alt="" />
+                    <img src="../../../../public/assets/image/<?= $_GET["imageUrl"]?>" alt="" />
                 </div>
                 <div class="right">
                     <h1><?= $stock['jenis'] ?></h1>
-                    <h3>
-                        <?= $stock['harga'] ?>
-                        /ton
-                    </h3>
+                    <h3><?= $stock['harga'] ?>/ton</h3>
                     <div class="jumlah">
                         <button id="btn-dsc"><i class="fa-solid fa-minus"></i></button>
-                        <span id="jumlah">1</span>
+                        <span id="jumlah" name="jumlah">1</span>
                         <button id="btn-asc"><i class="fa-solid fa-plus"></i></button>
                     </div>
                     <button id="btn-kirim" class="button2">Beli</button>
@@ -53,20 +52,16 @@ $stock = getDatas("SELECT * FROM stocks WHERE id = '$stock_id'")[0];
         </section>
     </section>
     <script>
-        const btnAsc = document.querySelector("#btn-asc")
-        const btnDsc = document.querySelector("#btn-dsc")
         const jumlah = document.querySelector('#jumlah')
-        console.log(btnAsc)
-        console.log(btnDsc)
-        console.log(jumlah)
         let angka = parseInt(jumlah.textContent)
-        console.log(angka)
-        btnAsc.addEventListener('click', (e) => {
+        
+        const btnAsc = document.querySelector("#btn-asc").addEventListener('click', (e) => {
             e.preventDefault();
             angka += 1;
             jumlah.innerHTML = angka
         })
-        btnDsc.addEventListener('click', (e) => {
+
+        document.querySelector("#btn-dsc").addEventListener('click', (e) => {
             e.preventDefault()
             if (angka !== 0) {
                 angka -= 1;

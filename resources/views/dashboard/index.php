@@ -1,6 +1,32 @@
 <?php
 session_start();
 require('../../../app/Http/Conrtoller/Controller.php');
+if (!isset($_SESSION['login'])) {
+	header('Location: http://localhost/web-rpl/');
+	exit;
+}
+if (isset($_SESSION['auth'])) {
+	$user = $_SESSION["auth"];
+	$isAdmin = getDatas("SELECT
+	admins.id AS admin_id,
+	users.id AS user_id,
+	users.name,
+	users.email,
+	users.email_verified_at,
+	admins.no_telp AS admin_no_telp,
+	admins.created_at AS admin_created_at,
+	admins.updated_at AS admin_updated_at
+	FROM
+	admins
+	JOIN
+	users ON admins.user_id = {$user['id']}
+	")[0];
+
+	if (!$isAdmin) {
+		header('Location: http://localhost/web-rpl/resources/views/beranda');
+		exit;
+	}
+}
 $stones = getDatas("SELECT * FROM stocks");
 ?>
 <!doctype html>
@@ -21,7 +47,7 @@ $stones = getDatas("SELECT * FROM stocks");
 <body>
 
 	<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Bumi Indah Persada</a>
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://localhost/web-rpl/resources/views/beranda">Bumi Indah Persada</a>
 		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>

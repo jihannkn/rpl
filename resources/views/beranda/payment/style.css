@@ -185,6 +185,10 @@ button:active {
   transform: scale(0.95);
 }
 
+.kembali {
+  text-decoration: none;
+}
+
 @keyframes fly-1 {
   from {
     transform: translateY(0.1em);
