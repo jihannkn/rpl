@@ -20,8 +20,9 @@ if (isset($_SESSION['auth'])) {
 	admins
 	JOIN
 	users ON admins.user_id = {$user['id']}
-")[0];
-	if ($isAdmin) {
+	")[0];
+
+	if (!$isAdmin) {
 		header('Location: http://localhost/web-rpl/resources/views/beranda');
 		exit;
 	}

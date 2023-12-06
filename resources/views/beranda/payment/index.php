@@ -3,7 +3,7 @@ session_start();
 require('../../../../app/Http/Conrtoller/Controller.php');
 $stock_id = $_GET['stock_id'];
 $stock = getDatas("SELECT * FROM stocks WHERE id = '$stock_id'")[0];
-$user = $_SESSION['user'];
+$user = $_SESSION['auth'];
 ?>
 
 <!DOCTYPE html>
@@ -36,14 +36,11 @@ $user = $_SESSION['user'];
             </a>
             <div class="payment">
                 <div class="left">
-                    <img src="../../../../public/assets/image/batu<?= $key + 1 ?>.jpg" alt="" />
+                    <img src="../../../../public/assets/image/<?= $_GET["imageUrl"]?>" alt="" />
                 </div>
                 <div class="right">
                     <h1><?= $stock['jenis'] ?></h1>
-                    <h3>
-                        <?= $stock['harga'] ?>
-                        /ton
-                    </h3>
+                    <h3><?= $stock['harga'] ?>/ton</h3>
                     <div class="jumlah">
                         <button id="btn-dsc"><i class="fa-solid fa-minus"></i></button>
                         <span id="jumlah" name="jumlah">1</span>

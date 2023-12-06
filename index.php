@@ -14,6 +14,38 @@ if (isset($_COOKIE["id"]) && isset($_COOKIE["key"])) {
 }
 
 if (isset($_SESSION["login"])) {
+  $email = $_SESSION["auth"]["email"];
+  $user = getDatas("SELECT * FROM users WHERE email = '$email'")[0];
+  $isAdmin = getDatas("SELECT
+  admins.id AS admin_id,
+  users.id AS user_id,
+  users.name,
+  users.email,
+  users.email_verified_at,
+  admins.no_telp AS admin_no_telp,
+  admins.created_at AS admin_created_at,
+  admins.updated_at AS admin_updated_at
+  FROM
+  admins
+  JOIN
+  users ON admins.user_id = {$user['id']}
+")[0];
+
+$isCustomer = getDatas("SELECT
+  customers.id AS customer_id,
+  users.id AS user_id,
+  users.name,
+  users.email,
+  users.email_verified_at,
+  customers.alamat,
+  customers.no_telp AS customer_no_telp,
+  customers.created_at AS customer_created_at,
+  customers.updated_at AS customer_updated_at
+  FROM
+  customers
+  JOIN
+  users ON customers.user_id = {$user['id']}
+")[0];
     if (isset($isAdmin)) {
         header("Location: http://localhost/web-rpl/resources/views/dashboard/");
         exit;
@@ -33,7 +65,7 @@ if (isset($_POST["login"])) {
 
     if ($user && password_verify($password, $user["password"])) {
         $_SESSION["login"] = true;
-        $_SESSION['user'] = $user;
+        $_SESSION['auth'] = $user;
 
         if (isset($_POST["remember"])) {
             setcookie("id", $user["id"], time() + 30000);

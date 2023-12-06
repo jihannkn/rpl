@@ -25,7 +25,7 @@ $stocks = getDatas("SELECT * FROM stocks");
                     </span>
                     <img src="../../../public/assets/image/batu<?= $key + 1 ?>.jpg" alt="" />
                     <div class="action">
-                        <a class="button" href="http://localhost/web-rpl/resources/views/beranda/payment?stock_id=<?= $stock["id"] ?>"> Buy Now </a>
+                        <a class="button" href="http://localhost/web-rpl/resources/views/beranda/payment?stock_id=<?= $stock["id"] ?>&imageUrl=batu<?= $key + 1 ?>.jpg"> Buy Now </a>
                     </div>
                 </div>
             </div>
