@@ -3,7 +3,14 @@ session_start();
 require('../../../../app/Http/Conrtoller/Controller.php');
 $stock_id = $_GET['stock_id'];
 $stock = getDatas("SELECT * FROM stocks WHERE id = '$stock_id'")[0];
-$user = $_SESSION['auth'];
+
+if (isset($_POST["beli-anjing"])) {
+    if (setTransaction()) {
+        header("Location: http://localhost/web-rpl/resources/views/beranda/");
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -43,32 +50,48 @@ $user = $_SESSION['auth'];
                     <h3><?= $stock['harga'] ?>/ton</h3>
                     <div class="jumlah">
                         <button id="btn-dsc"><i class="fa-solid fa-minus"></i></button>
-                        <span id="jumlah" name="jumlah">1</span>
+                        <span id="jumlah">1</span>
                         <button id="btn-asc"><i class="fa-solid fa-plus"></i></button>
                     </div>
-                    <button id="btn-kirim" class="button2">Beli</button>
+                    <form action="" method="post">
+                        <input type="hidden" name="jumlah_hidden" id="jumlah_hidden">
+                        <input type="hidden" name="jenis_hidden" id="jenis_hidden" value="<?= $stock["jenis"] ?>">
+                        <button id="btn-kirim" class="button2" name="beli-anjing">Beli</button>
+                    </form>
                 </div>
             </div>
         </section>
     </section>
     <script>
-        const jumlah = document.querySelector('#jumlah')
-        let angka = parseInt(jumlah.textContent)
-        
-        const btnAsc = document.querySelector("#btn-asc").addEventListener('click', (e) => {
-            e.preventDefault();
-            angka += 1;
-            jumlah.innerHTML = angka
-        })
+    const jumlah = document.querySelector('#jumlah');
+    const jumlahHidden = document.querySelector('#jumlah_hidden');
+    let angka = parseInt(jumlah.textContent);
 
-        document.querySelector("#btn-dsc").addEventListener('click', (e) => {
-            e.preventDefault()
-            if (angka !== 0) {
-                angka -= 1;
-            }
-            jumlah.innerHTML = angka
-        })
-    </script>
+    const updateJumlah = () => {
+        jumlah.innerHTML = angka;
+        jumlahHidden.value = angka;
+    };
+
+    const btnAsc = document.querySelector("#btn-asc").addEventListener('click', (e) => {
+        e.preventDefault();
+        angka += 1;
+        updateJumlah();
+    });
+
+    document.querySelector("#btn-dsc").addEventListener('click', (e) => {
+        e.preventDefault();
+        if (angka !== 0) {
+            angka -= 1;
+        }
+        updateJumlah();
+    });
+
+    jumlah.addEventListener('input', (e) => {
+        angka = parseInt(e.target.textContent) || 0;
+        updateJumlah();
+    });
+</script>
+
 </body>
 
 </html>
