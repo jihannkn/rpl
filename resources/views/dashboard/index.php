@@ -101,7 +101,7 @@ $stones = getDatas("SELECT * FROM stocks");
 							<div class="card">
 								<div class="card-body">
 									<h5 class="card-title">Jenis Batu : <?= $stone["jenis"] ?></h5>
-									<p class="card-text">Jumlah Stock : <?= $stone["jumlah_stok"] ?> - TONO</p>
+									<p class="card-text">Jumlah Stock : <?= $stone["jumlah_stok"] ?> - TON</p>
 									<a href="http://localhost/web-rpl/resources/views/dashboard/create?jenis=<?= $stone["jenis"] ?>" class="btn btn-primary">Tambah Stock</a>
 								</div>
 							</div>

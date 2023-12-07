@@ -44,7 +44,8 @@ function updateStocks()
 }
 
 
-function setTransaction () {
+function setTransaction()
+{
     global $connection;
     $table = 'transactions';
     $tanggal = date('Y-m-d H:i:s');
@@ -53,10 +54,12 @@ function setTransaction () {
     $jenis = $_POST["jenis_hidden"];
     $stock = getDatas("SELECT * FROM stocks WHERE jenis = '$jenis'")[0];
     $total = $jumlahBeli * $stock["harga"] * 1000;
+
     $updateStock = $stock["jumlah_stok"] - $jumlahBeli;
+
     $queryUp = "UPDATE stocks SET jumlah_stok = '$updateStock' WHERE jenis = '$jenis'";
     $querySet = "INSERT INTO $table VALUES ('','$user_id','$jenis', '$tanggal', '$jumlahBeli', '$total','','')";
     mysqli_query($connection, $queryUp);
     mysqli_query($connection, $querySet);
-    return mysqli_affected_rows($connection);  
+    return mysqli_affected_rows($connection);
 }
