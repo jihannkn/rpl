@@ -3,6 +3,10 @@ session_start();
 require('../../../../app/Http/Conrtoller/Controller.php');
 $stock_id = $_GET['stock_id'];
 $stock = getDatas("SELECT * FROM stocks WHERE id = '$stock_id'")[0];
+if (!isset($_SESSION['login'])) {
+    header('Location: http://localhost/web-rpl/');
+    exit;
+}
 
 if (isset($_POST["beli-anjing"])) {
     if (setTransaction()) {
@@ -25,7 +29,7 @@ if (isset($_POST["beli-anjing"])) {
 </head>
 
 <body>
-<a class="nav-link px-3" href="http://localhost/web-rpl/resources/views/logout/">Sign out</a>
+    <a class="nav-link px-3" href="http://localhost/web-rpl/resources/views/logout/">Sign out</a>
     <section>
         <section>
             <a class="kembali" href="http://localhost/web-rpl/resources/views/beranda/">
@@ -43,7 +47,7 @@ if (isset($_POST["beli-anjing"])) {
             </a>
             <div class="payment">
                 <div class="left">
-                    <img src="../../../../public/assets/image/<?= $_GET["imageUrl"]?>" alt="" />
+                    <img src="../../../../public/assets/image/<?= $_GET["imageUrl"] ?>" alt="" />
                 </div>
                 <div class="right">
                     <h1><?= $stock['jenis'] ?></h1>
@@ -63,34 +67,35 @@ if (isset($_POST["beli-anjing"])) {
         </section>
     </section>
     <script>
-    const jumlah = document.querySelector('#jumlah');
-    const jumlahHidden = document.querySelector('#jumlah_hidden');
-    let angka = parseInt(jumlah.textContent);
+        const jumlah = document.querySelector('#jumlah');
+        const jumlahHidden = document.querySelector('#jumlah_hidden');
+        jumlahHidden.value = 1
+        let angka = parseInt(jumlah.textContent);
 
-    const updateJumlah = () => {
-        jumlah.innerHTML = angka;
-        jumlahHidden.value = angka;
-    };
+        const updateJumlah = () => {
+            jumlah.innerHTML = angka;
+            jumlahHidden.value = angka;
+        };
 
-    const btnAsc = document.querySelector("#btn-asc").addEventListener('click', (e) => {
-        e.preventDefault();
-        angka += 1;
-        updateJumlah();
-    });
+        const btnAsc = document.querySelector("#btn-asc").addEventListener('click', (e) => {
+            e.preventDefault();
+            angka += 1;
+            updateJumlah();
+        });
 
-    document.querySelector("#btn-dsc").addEventListener('click', (e) => {
-        e.preventDefault();
-        if (angka !== 0) {
-            angka -= 1;
-        }
-        updateJumlah();
-    });
+        document.querySelector("#btn-dsc").addEventListener('click', (e) => {
+            e.preventDefault();
+            if (angka !== 0) {
+                angka -= 1;
+            }
+            updateJumlah();
+        });
 
-    jumlah.addEventListener('input', (e) => {
-        angka = parseInt(e.target.textContent) || 0;
-        updateJumlah();
-    });
-</script>
+        jumlah.addEventListener('input', (e) => {
+            angka = parseInt(e.target.textContent) || 0;
+            updateJumlah();
+        });
+    </script>
 
 </body>
 
