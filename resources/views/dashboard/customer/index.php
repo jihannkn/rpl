@@ -1,6 +1,32 @@
 <?php
 session_start();
 require("../../../../app/Http/Conrtoller/Controller.php");
+if (!isset($_SESSION['login'])) {
+	header('Location: http://localhost/web-rpl/');
+	exit;
+}
+if (isset($_SESSION['auth'])) {
+	$user = $_SESSION["auth"];
+	$isAdmin = getDatas("SELECT
+	admins.id AS admin_id,
+	users.id AS user_id,
+	users.name,
+	users.email,
+	users.email_verified_at,
+	admins.no_telp AS admin_no_telp,
+	admins.created_at AS admin_created_at,
+	admins.updated_at AS admin_updated_at
+	FROM
+	admins
+	JOIN
+	users ON admins.user_id = {$user['id']}
+	")[0];
+
+	if (!$isAdmin) {
+		header('Location: http://localhost/web-rpl/resources/views/beranda');
+		exit;
+	}
+}
 $customers = getDatas("SELECT
 users.id,
 users.name,
@@ -15,9 +41,6 @@ users
 JOIN
 customers ON users.id = customers.user_id;
 ");
-// foreach ($customers as $key => $customer) {
-// 	echo $customer;
-// }
 ?>
 <!doctype html>
 <html lang="en">
@@ -43,7 +66,7 @@ customers ON users.id = customers.user_id;
 		</button>
 		<div class="navbar-nav">
 			<div class="nav-item text-nowrap">
-			<a class="nav-link px-3" href="http://localhost/web-rpl/resources/views/logout/">Sign out</a>
+				<a class="nav-link px-3" href="http://localhost/web-rpl/resources/views/logout/">Sign out</a>
 			</div>
 		</div>
 	</header>
