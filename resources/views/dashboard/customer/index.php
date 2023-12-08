@@ -84,6 +84,7 @@ customers ON users.id = customers.user_id;
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 					<h1 class="h2">Customer</h1>
+					<a href="http://localhost/web-rpl/resources/views/dashboard/customer/create" class="btn btn-primary btn-md">Tambah Data Customer</a>
 				</div>
 				<div class="table-responsive">
 					<table class="table table-striped table-sm">
@@ -93,7 +94,7 @@ customers ON users.id = customers.user_id;
 								<th scope="col">Nama Perusahaan</th>
 								<th scope="col">Alamat Perusahaan</th>
 								<th scope="col">Email</th>
-								<!-- <th scope="col">Header</th> -->
+								<th scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -103,6 +104,7 @@ customers ON users.id = customers.user_id;
 									<td><?= $customer["name"]  ?></td>
 									<td><?= $customer["alamat"]  ?></td>
 									<td><?= $customer["email"]  ?></td>
+									<td><a href="http://localhost/web-rpl/resources/views/dashboard/customer/detail?id=<?=$customer["id"]?>" class="btn btn-success btn-sm">Detail</a></td>
 								</tr>
 							<?php endforeach; ?>
 						</tbody>
