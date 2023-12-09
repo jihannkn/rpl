@@ -63,3 +63,10 @@ function setTransaction()
     mysqli_query($connection, $querySet);
     return mysqli_affected_rows($connection);
 }
+
+
+function deleteUser($id) {
+    global $connection;
+    
+    return mysqli_affected_rows($connection);
+}

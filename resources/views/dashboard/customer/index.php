@@ -115,8 +115,7 @@ customers ON users.id = customers.user_id;
 							<tr>
 								<th scope="col">No</th>
 								<th scope="col">Nama Perusahaan</th>
-								<th scope="col">Alamat Perusahaan</th>
-								<th scope="col">Email</th>
+								<th scope="col">Action</th>
 								<th scope="col">Action</th>
 							</tr>
 						</thead>
@@ -125,9 +124,8 @@ customers ON users.id = customers.user_id;
 								<tr>
 									<td><?= $key + 1  ?></td>
 									<td><?= $customer["name"]  ?></td>
-									<td><?= $customer["alamat"]  ?></td>
-									<td><?= $customer["email"]  ?></td>
 									<td><a href="http://localhost/web-rpl/resources/views/dashboard/customer/detail?id=<?=$customer["id"]?>" class="btn btn-success btn-sm">Detail</a></td>
+									<td><a href="http://localhost/web-rpl/resources/views/dashboard/customer/delete?id=<?=$customer["id"]?>" class="btn btn-danger btn-sm">Delete</a></td>
 								</tr>
 							<?php endforeach; ?>
 						</tbody>
