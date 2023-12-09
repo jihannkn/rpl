@@ -52,6 +52,7 @@ if (isset($_POST["beli-anjing"])) {
                 <div class="right">
                     <h1><?= $stock['jenis'] ?></h1>
                     <h3><?= $stock['harga'] ?>/ton</h3>
+                    <span>sisa : <?= $stock["jumlah_stok"] ?> - ton</span>
                     <div class="jumlah">
                         <button id="btn-dsc"><i class="fa-solid fa-minus"></i></button>
                         <span id="jumlah">1</span>
