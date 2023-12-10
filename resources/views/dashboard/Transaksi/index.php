@@ -107,7 +107,7 @@ function getCustomer($id)
 							<tr>
 								<th scope="col">No</th>
 								<th scope="col">Jenis batu</th>
-								<th scope="col">ID Customer</th>
+								<th scope="col">Nama Customer</th>
 								<th scope="col">Tanggal</th>
 								<th scope="col">Jumlah Pembelian</th>
 								<th scope="col">Total</th>

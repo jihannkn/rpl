@@ -155,7 +155,7 @@ customers ON users.id = customers.user_id;
 											<span>Alamat PT : <?= $customer["alamat"] ?></span>
 										</div>
 										<div>
-											<span>No Telepehenoe PT : <?= $customer["customer_no_telp"] ?></span>
+											<span>No Telephone PT : <?= $customer["customer_no_telp"] ?></span>
 										</div>
 									</div>
 									<div class="modal-footer">
