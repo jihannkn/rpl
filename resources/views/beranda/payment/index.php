@@ -29,7 +29,16 @@ if (isset($_POST["beli-anjing"])) {
 </head>
 
 <body>
-    <a class="nav-link px-3" href="http://localhost/web-rpl/resources/views/logout/">Sign out</a>
+<nav>
+        <div class="lif-1"><img src="../../../../public/assets/image/logoPT.png" alt=""></div>
+        <div class="rit-1">
+            <ul>
+                <li><a href="">Profil</a></li>
+            <li>
+                <a class="nav-link px-3" href="http://localhost/web-rpl/resources/views/logout/">Sign out</a></li>
+            </ul>
+        </div>
+        </nav>
     <section>
         <section>
             <a class="kembali" href="http://localhost/web-rpl/resources/views/beranda/">
