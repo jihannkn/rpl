@@ -14,18 +14,6 @@ function getDatas($query)
 }
 
 
-function storeData()
-{
-    global $connection;
-    $table = "CONTOH";
-    $data1 = $_POST["data_1"];
-    $data2 = $_POST["data_2"];
-
-    $query = "INSERT INTO $table VALUES ('$data1','$data2')";
-    mysqli_query($connection, $query);
-    return mysqli_affected_rows($connection);
-}
-
 function updateStocks()
 {
     global $connection;
@@ -93,12 +81,10 @@ function deleteCustomer($customerId)
 
     return false;
 }
-
 function updateCustomer()
 {
     global $connection;
-
-    // Filter input
+    
     $id = htmlspecialchars($_POST["id"]);
     $oldName = htmlspecialchars($_POST["old_name"]);
     $oldEmail = htmlspecialchars($_POST["old_email"]);
@@ -106,11 +92,18 @@ function updateCustomer()
     $name = htmlspecialchars($_POST["name"]);
     $email = htmlspecialchars($_POST["email"]);
     $alamat = htmlspecialchars($_POST["alamat"]);
-    $noTelp = htmlspecialchars($_POST["no_telp"]);
+    $noTelp = htmlspecialchars($_POST["customer_no_telp"]);
 
-    // Check for duplicate name or email in users table
+    // echo "ID: " . $id . "<br>";
+    // echo "Old Name: " . $oldName . "<br>";
+    // echo "Old Email: " . $oldEmail . "<br>";
+    // echo "Old No Telp: " . $oldNoTelp . "<br>";
+    // echo "Name: " . $name . "<br>";
+    // echo "Email: " . $email . "<br>";
+    // echo "Alamat: " . $alamat . "<br>";
+    // echo "No Telp: " . $noTelp . "<br>";
+
     $userDuplicateChecked = getDatas("SELECT * FROM users WHERE id = '$id'");
-    
     if ($userDuplicateChecked) {
         if ($name !== $oldName && strtolower($name) === strtolower($userDuplicateChecked[0]["name"])) {
             echo "
@@ -130,9 +123,10 @@ function updateCustomer()
         }
     }
 
-    // Check for duplicate phone number in customers table
+    $userQuery = "UPDATE users SET name = '$name', email = '$email' WHERE id = '$id'";
+    mysqli_query($connection, $userQuery);
+
     $customerDuplicateChecked = getDatas("SELECT * FROM customers WHERE user_id = '$id'");
-    
     if ($customerDuplicateChecked) {
         if ($noTelp !== $oldNoTelp && $noTelp === $customerDuplicateChecked[0]["no_telp"]) {
             echo "
@@ -144,11 +138,7 @@ function updateCustomer()
         }
     }
 
-    // Update users and customers tables
-    $userQuery = "UPDATE users SET name = '$name', email = '$email' WHERE id = '$id'";
     $customerQuery = "UPDATE customers SET alamat = '$alamat', no_telp = '$noTelp' WHERE user_id = '$id'";
-
-    mysqli_query($connection, $userQuery);
     mysqli_query($connection, $customerQuery);
 
     return mysqli_affected_rows($connection);

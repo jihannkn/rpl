@@ -29,8 +29,15 @@ if (isset($_SESSION['auth'])) {
     }
 }
 if (isset($_POST["tambah"])) {
-    if (updateStocks()) {
+    if (updateStocks() > 0) {
         header("Location: http://localhost/web-rpl/resources/views/dashboard/");
+    } else {
+        echo "
+            <script>
+                alert('Stok gagal ditambahkan.');
+                document.location.href = 'http://localhost/web-rpl/resources/views/dashboard/'
+            </script>
+        ";
     }
 }
 ?>

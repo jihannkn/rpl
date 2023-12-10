@@ -86,7 +86,7 @@ if (isset($_POST["update_customer"])) {
 
 <body>
     <a href="http://localhost/web-rpl/resources/views/dashboard/customer/">Kembali</a>
-    <form method="post">
+    <!-- <form method="post">
         <input type="hidden" name="id" value="<?=$customer["id"]?>">
         <input type="hidden" name="old_name" value="<?= $customer["name"] ?>">
         <input type="hidden" name="old_email" value="<?= $customer["email"] ?>">
@@ -105,10 +105,39 @@ if (isset($_POST["update_customer"])) {
         </div>
         <div>
             <label for="">No Telp PT</label>
-            <input type="text" name="no_telp" value="<?= $customer["customer_no_telp"] ?>">
+            <input type="text" name="customer_no_telp" value="<?= $customer["customer_no_telp"] ?>">
         </div>
         <button class="btn btn-primary btn-md" name="update_customer">update</button>
-    </form>
+    </form> -->
+    <form method="post">
+    <input type="hidden" name="id" value="<?= $customer["id"] ?>">
+    <input type="hidden" name="old_name" value="<?= $customer["name"] ?>">
+    <input type="hidden" name="old_email" value="<?= $customer["email"] ?>">
+    <input type="hidden" name="old_customer_no_telp" value="<?= $customer["customer_no_telp"] ?>">
+
+    <div>
+        <label for="name">Nama PT</label>
+        <input type="text" name="name" id="name" value="<?= $customer["name"] ?>">
+    </div>
+
+    <div>
+        <label for="email">Email PT</label>
+        <input type="email" name="email" id="email" value="<?= $customer["email"] ?>">
+    </div>
+
+    <div>
+        <label for="alamat">Alamat PT</label>
+        <input type="text" name="alamat" id="alamat" value="<?= $customer["alamat"] ?>">
+    </div>
+
+    <div>
+        <label for="customer_no_telp">No Telp PT</label>
+        <input type="text" name="customer_no_telp" id="customer_no_telp" value="<?= $customer["customer_no_telp"] ?>">
+    </div>
+
+    <button class="btn btn-primary btn-md" name="update_customer">Update</button>
+</form>
+
     	<!-- Js -->
 	<script src="../dashboard.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
