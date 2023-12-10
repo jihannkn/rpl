@@ -1,6 +1,6 @@
 <?php
 session_start();
-require("../../../../app/Http/Conrtoller/Controller.php");
+require("../../../../../app/Http/Conrtoller/Controller.php");
 if (!isset($_SESSION['login'])) {
 	header('Location: http://localhost/web-rpl/');
 	exit;
