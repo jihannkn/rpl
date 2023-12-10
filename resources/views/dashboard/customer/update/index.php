@@ -28,20 +28,51 @@ if (isset($_SESSION['auth'])) {
     }
 }
 $customer_id = $_GET["id"];
+
+// $customer = getDatas("SELECT
+// users.id,
+// users.name,
+// users.email,
+// users.email_verified_at,
+// customers.alamat,
+// customers.no_telp AS customer_no_telp,
+// customers.created_at AS customer_created_at,
+// customers.updated_at AS customer_updated_at
+// FROM
+// users
+// JOIN
+// customers ON users.id = '$customer_id';
+// ")[0];
 $customer = getDatas("SELECT
-users.id,
-users.name,
-users.email,
-users.email_verified_at,
-customers.alamat,
-customers.no_telp AS customer_no_telp,
-customers.created_at AS customer_created_at,
-customers.updated_at AS customer_updated_at
+    users.id,
+    users.name,
+    users.email,
+    users.email_verified_at,
+    customers.alamat,
+    customers.no_telp AS customer_no_telp,
+    customers.created_at AS customer_created_at,
+    customers.updated_at AS customer_updated_at
 FROM
-users
+    users
 JOIN
-customers ON users.id = '$customer_id';
+    customers ON users.id = customers.user_id
+WHERE
+    users.id = '$customer_id';
 ")[0];
+
+
+if (isset($_POST["update_customer"])) {
+    if (updateCustomer() > 0) {
+        header("Location: http://localhost/web-rpl/resources/views/dashboard/customer/");
+    } else {
+        echo "
+        <script>
+        alert('Data gagal disimpan');
+        </script>
+        ";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,24 +86,28 @@ customers ON users.id = '$customer_id';
 
 <body>
     <a href="http://localhost/web-rpl/resources/views/dashboard/customer/">Kembali</a>
-    <form>
+    <form method="post">
+        <input type="hidden" name="id" value="<?=$customer["id"]?>">
+        <input type="hidden" name="old_name" value="<?= $customer["name"] ?>">
+        <input type="hidden" name="old_email" value="<?= $customer["email"] ?>">
+        <input type="hidden" name="old_customer_no_telp" value="<?= $customer["customer_no_telp"] ?>">
         <div>
             <label for="">Nama PT</label>
-            <input type="text" value="<?= $customer["name"] ?>">
+            <input type="text" name="name" value="<?= $customer["name"] ?>">
         </div>
         <div>
             <label for="">Email PT</label>
-            <input type="email" value="<?= $customer["email"] ?>">
+            <input type="email" name="email" value="<?= $customer["email"] ?>">
         </div>
         <div>
             <label for="">Alamat PT</label>
-            <input type="text" value="<?= $customer["alamat"] ?>">
+            <input type="text" name="alamat" value="<?= $customer["alamat"] ?>">
         </div>
         <div>
             <label for="">No Telp PT</label>
-            <input type="text" value="<?= $customer["customer_no_telp"] ?>">
+            <input type="text" name="no_telp" value="<?= $customer["customer_no_telp"] ?>">
         </div>
-        <button class="btn btn-primary btn-md">update</button>
+        <button class="btn btn-primary btn-md" name="update_customer">update</button>
     </form>
     	<!-- Js -->
 	<script src="../dashboard.js"></script>

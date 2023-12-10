@@ -110,26 +110,84 @@ customers ON users.id = customers.user_id;
 					<a href="http://localhost/web-rpl/resources/views/dashboard/customer/create" class="btn btn-primary btn-md">Tambah Data Customer</a>
 				</div>
 				<div class="table-responsive">
-					<table class="table table-striped table-sm">
+					<table class="table table-striped table-md ">
 						<thead>
 							<tr>
 								<th scope="col">No</th>
 								<th scope="col">Nama Perusahaan</th>
 								<th scope="col">Action</th>
-								<th scope="col">Action</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody class="">
 							<?php foreach ($customers as $key => $customer) : ?>
 								<tr>
 									<td><?= $key + 1  ?></td>
 									<td><?= $customer["name"]  ?></td>
-									<td><a href="http://localhost/web-rpl/resources/views/dashboard/customer/detail?id=<?=$customer["id"]?>" class="btn btn-success btn-sm">Detail</a></td>
-									<td><a href="http://localhost/web-rpl/resources/views/dashboard/customer/delete?id=<?=$customer["id"]?>" class="btn btn-danger btn-sm">Delete</a></td>
+									<td>
+										<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop<?= $customer["id"] ?>">
+											Detail
+										</button>
+										<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete<?= $customer["id"] ?>">
+											Delete
+										</button>
+									</td>
 								</tr>
 							<?php endforeach; ?>
 						</tbody>
 					</table>
+					<!-- Modal Detail -->
+					<?php foreach ($customers as $key => $customer) : ?>
+						<div class="modal fade" id="staticBackdrop<?= $customer["id"] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Perusahaan</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<div>
+											<span>Nama PT : <?= $customer["name"] ?></span>
+										</div>
+										<div>
+											<span>Email PT : <?= $customer["email"] ?></span>
+										</div>
+										<div>
+											<span>Alamat PT : <?= $customer["alamat"] ?></span>
+										</div>
+										<div>
+											<span>No Telepehenoe PT : <?= $customer["customer_no_telp"] ?></span>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<a href="http://localhost/web-rpl/resources/views/dashboard/customer/update?id=<?=$customer["id"]?>" type="button" class="btn btn-info text-white">Update</a>
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					<?php endforeach; ?>
+					<!-- Close Modal Detail -->
+					<!-- Delete PUP -->
+					<?php foreach ($customers as $key => $customer) : ?>
+						<div class="modal fade" id="staticBackdropDelete<?=$customer["id"]?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Perusahaan</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<span>Yakin dek dihapus ?</span>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+										<a href="http://localhost/web-rpl/resources/views/dashboard/customer/delete?id=<?= $customer["id"] ?>" type="button" class="btn btn-danger text-white">Delete</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					<?php endforeach; ?>
+					<!-- Close Delete PUP -->
 				</div>
 			</main>
 		</div>
