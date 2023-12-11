@@ -105,25 +105,18 @@ function updateCustomer()
 }
 
 
-function deleteCustomer($customerId)
+function deleteCustomer($userNp)
 {
     global $connection;
-    mysqli_begin_transaction($connection);
-    try {
-        $query = "DELETE customers, users
-                  FROM customers
-                  INNER JOIN users ON customers.user_id = users.id
-                  WHERE customers.id = '$customerId'";
+    $deleteUserQuery = "DELETE users, customers, admins, transactions
+                            FROM users
+                            LEFT JOIN customers ON users.np = customers.user_np
+                            LEFT JOIN admins ON users.np = admins.user_np
+                            LEFT JOIN transactions ON users.np = transactions.user_np
+                            WHERE users.np = '$userNp'";
+    mysqli_query($connection, $deleteUserQuery);
 
-        mysqli_query($connection, $query);
-
-        mysqli_commit($connection);
-
-        return true;
-    } catch (Exception $e) {
-        mysqli_rollback($connection);
-        return false;
-    }
+    return mysqli_affected_rows($connection);
 }
 
 
@@ -152,7 +145,7 @@ function createCustomer()
                 alert('Ws enek jeneng seng podo ah CROT.');
             </script>
             ";
-            return false;
+        return false;
     }
     if ($userEmailDuplicated) {
         echo "
@@ -160,14 +153,14 @@ function createCustomer()
                 alert('Ws enek jeneng seng podo ah CROT.');
             </script>
             ";
-            return false;
+        return false;
     }
 
     $userQuery = "INSERT INTO users (name, email, password,)
     VALUES ('$name', '$email', '$hashedPassword');
     ";
 
-    mysqli_query($connection, $userQuery); 
+    mysqli_query($connection, $userQuery);
 
     return mysqli_affected_rows($connection);
 }

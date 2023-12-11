@@ -201,7 +201,7 @@ customers ON users.np = customers.user_np;
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-										<a href="http://localhost/web-rpl/resources/views/dashboard/customer/delete?id=<?= $customer["np"] ?>" type="button" class="btn btn-danger text-white">Delete</a>
+										<a href="http://localhost/web-rpl/resources/views/dashboard/customer/delete?np=<?= $customer["np"] ?>" type="button" class="btn btn-danger text-white">Delete</a>
 									</div>
 								</div>
 							</div>
