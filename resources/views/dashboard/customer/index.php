@@ -5,33 +5,53 @@ if (!isset($_SESSION['login'])) {
 	header('Location: http://localhost/web-rpl/');
 	exit;
 }
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "bumipersada";
+$mysqli = new mysqli($servername, $username, $password, $dbname);
+if ($mysqli->connect_error) {
+	die("Connection failed: " . $mysqli->connect_error);
+}
+
+
 if (isset($_SESSION['auth'])) {
 	$user = $_SESSION["auth"];
-	$isAdmin = getDatas("SELECT
-	admins.id AS admin_id,
-	users.id AS user_id,
-	users.name,
-	users.email,
-	users.email_verified_at,
-	admins.no_telp AS admin_no_telp,
-	admins.created_at AS admin_created_at,
-	admins.updated_at AS admin_updated_at
-	FROM
-	admins
-	JOIN
-	users ON admins.user_id = {$user['id']}
-	")[0];
+
+	$stmt = $mysqli->prepare("SELECT
+        admins.id AS admin_id,
+        users.np AS user_np,
+        users.name,
+        users.email,
+        admins.no_telp AS admin_no_telp,
+        admins.created_at AS admin_created_at,
+        admins.updated_at AS admin_updated_at
+        FROM
+        admins
+        JOIN
+        users ON admins.user_np = users.np
+        WHERE users.np = ?
+        LIMIT 1");
+
+	$stmt->bind_param("s", $user['np']);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$isAdmin = $result->fetch_assoc();
+
+	$stmt->close();
 
 	if (!$isAdmin) {
 		header('Location: http://localhost/web-rpl/resources/views/beranda');
 		exit;
 	}
 }
+
+
 $customers = getDatas("SELECT
-users.id,
+users.np,
 users.name,
 users.email,
-users.email_verified_at,
 customers.alamat,
 customers.no_telp AS customer_no_telp,
 customers.created_at AS customer_created_at,
@@ -39,7 +59,7 @@ customers.updated_at AS customer_updated_at
 FROM
 users
 JOIN
-customers ON users.id = customers.user_id;
+customers ON users.np = customers.user_np;
 ");
 ?>
 <!doctype html>
@@ -124,10 +144,10 @@ customers ON users.id = customers.user_id;
 									<td><?= $key + 1  ?></td>
 									<td><?= $customer["name"]  ?></td>
 									<td>
-										<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop<?= $customer["id"] ?>">
+										<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop<?= $customer["np"] ?>">
 											Detail
 										</button>
-										<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete<?= $customer["id"] ?>">
+										<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete<?= $customer["np"] ?>">
 											Delete
 										</button>
 									</td>
@@ -137,7 +157,7 @@ customers ON users.id = customers.user_id;
 					</table>
 					<!-- Modal Detail -->
 					<?php foreach ($customers as $key => $customer) : ?>
-						<div class="modal fade" id="staticBackdrop<?= $customer["id"] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						<div class="modal fade" id="staticBackdrop<?= $customer["np"] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -159,7 +179,7 @@ customers ON users.id = customers.user_id;
 										</div>
 									</div>
 									<div class="modal-footer">
-										<a href="http://localhost/web-rpl/resources/views/dashboard/customer/update?id=<?=$customer["id"]?>" type="button" class="btn btn-info text-white">Update</a>
+										<a href="http://localhost/web-rpl/resources/views/dashboard/customer/update?np=<?= $customer["np"] ?>" type="button" class="btn btn-info text-white">Update</a>
 										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 									</div>
 								</div>
@@ -169,7 +189,7 @@ customers ON users.id = customers.user_id;
 					<!-- Close Modal Detail -->
 					<!-- Delete PUP -->
 					<?php foreach ($customers as $key => $customer) : ?>
-						<div class="modal fade" id="staticBackdropDelete<?=$customer["id"]?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						<div class="modal fade" id="staticBackdropDelete<?= $customer["np"] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -181,7 +201,7 @@ customers ON users.id = customers.user_id;
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-										<a href="http://localhost/web-rpl/resources/views/dashboard/customer/delete?id=<?= $customer["id"] ?>" type="button" class="btn btn-danger text-white">Delete</a>
+										<a href="http://localhost/web-rpl/resources/views/dashboard/customer/delete?id=<?= $customer["np"] ?>" type="button" class="btn btn-danger text-white">Delete</a>
 									</div>
 								</div>
 							</div>

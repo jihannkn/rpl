@@ -5,34 +5,53 @@ if (!isset($_SESSION['login'])) {
     header('Location: http://localhost/web-rpl/');
     exit;
 }
-if (isset($_SESSION['auth'])) {
-    $user = $_SESSION["auth"];
-    $isAdmin = getDatas("SELECT
-	admins.id AS admin_id,
-	users.id AS user_id,
-	users.name,
-	users.email,
-	users.email_verified_at,
-	admins.no_telp AS admin_no_telp,
-	admins.created_at AS admin_created_at,
-	admins.updated_at AS admin_updated_at
-	FROM
-	admins
-	JOIN
-	users ON admins.user_id = {$user['id']}
-	")[0];
 
-    if (!$isAdmin) {
-        header('Location: http://localhost/web-rpl/resources/views/beranda');
-        exit;
-    }
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "bumipersada";
+$mysqli = new mysqli($servername, $username, $password, $dbname);
+if ($mysqli->connect_error) {
+	die("Connection failed: " . $mysqli->connect_error);
 }
-$customer_id = $_GET["id"];
+
+
+if (isset($_SESSION['auth'])) {
+	$user = $_SESSION["auth"];
+
+	$stmt = $mysqli->prepare("SELECT
+        admins.id AS admin_id,
+        users.np AS user_np,
+        users.name,
+        users.email,
+        admins.no_telp AS admin_no_telp,
+        admins.created_at AS admin_created_at,
+        admins.updated_at AS admin_updated_at
+        FROM
+        admins
+        JOIN
+        users ON admins.user_np = users.np
+        WHERE users.np = ?
+        LIMIT 1");
+
+	$stmt->bind_param("s", $user['np']);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$isAdmin = $result->fetch_assoc();
+
+	$stmt->close();
+
+	if (!$isAdmin) {
+		header('Location: http://localhost/web-rpl/resources/views/beranda');
+		exit;
+	}
+}
+
+$customer_np = $_GET["np"];
 $customer = getDatas("SELECT
-    users.id,
+    users.np,
     users.name,
     users.email,
-    users.email_verified_at,
     customers.alamat,
     customers.no_telp AS customer_no_telp,
     customers.created_at AS customer_created_at,
@@ -40,9 +59,9 @@ $customer = getDatas("SELECT
 FROM
     users
 JOIN
-    customers ON users.id = customers.user_id
+    customers ON users.np = customers.user_np
 WHERE
-    users.id = '$customer_id';
+    users.np = '$customer_np';
 ")[0];
 
 if (isset($_POST["update_customer"])) {
@@ -76,7 +95,7 @@ if (isset($_POST["update_customer"])) {
                     <h2 class="text-xl font-bold leading-7 text-gray-900">Ubah Data</h2>
                     <div class="mt-7 grid grid-cols-1 gap-x-6 gap-y-8 ">
                         <div class="sm:col-span-4">
-                            <input type="hidden" name="id" value="<?= $customer["id"] ?>">
+                            <input type="hidden" name="np" value="<?= $customer["np"] ?>">
                             <input type="hidden" name="old_name" value="<?= $customer["name"] ?>">
                             <input type="hidden" name="old_email" value="<?= $customer["email"] ?>">
                             <input type="hidden" name="old_customer_no_telp" value="<?= $customer["customer_no_telp"] ?>">

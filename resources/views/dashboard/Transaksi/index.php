@@ -5,32 +5,52 @@ if (!isset($_SESSION['login'])) {
 	header('Location: http://localhost/web-rpl/');
 	exit;
 }
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "bumipersada";
+$mysqli = new mysqli($servername, $username, $password, $dbname);
+if ($mysqli->connect_error) {
+	die("Connection failed: " . $mysqli->connect_error);
+}
+
+
 if (isset($_SESSION['auth'])) {
 	$user = $_SESSION["auth"];
-	$isAdmin = getDatas("SELECT
-	admins.id AS admin_id,
-	users.id AS user_id,
-	users.name,
-	users.email,
-	users.email_verified_at,
-	admins.no_telp AS admin_no_telp,
-	admins.created_at AS admin_created_at,
-	admins.updated_at AS admin_updated_at
-	FROM
-	admins
-	JOIN
-	users ON admins.user_id = {$user['id']}
-	")[0];
+
+	$stmt = $mysqli->prepare("SELECT
+        admins.id AS admin_id,
+        users.np AS user_np,
+        users.name,
+        users.email,
+        admins.no_telp AS admin_no_telp,
+        admins.created_at AS admin_created_at,
+        admins.updated_at AS admin_updated_at
+        FROM
+        admins
+        JOIN
+        users ON admins.user_np = users.np
+        WHERE users.np = ?
+        LIMIT 1");
+
+	$stmt->bind_param("s", $user['np']);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$isAdmin = $result->fetch_assoc();
+
+	$stmt->close();
 
 	if (!$isAdmin) {
 		header('Location: http://localhost/web-rpl/resources/views/beranda');
 		exit;
 	}
 }
+
 $transactions = getDatas("SELECT * FROM transactions");
-function getCustomer($id)
+function getCustomer($np)
 {
-	$customers = getDatas("SELECT * FROM users WHERE id = '$id'")[0];
+	$customers = getDatas("SELECT * FROM users WHERE np = '$np'")[0];
 	return $customers["name"];
 }
 ?>
@@ -118,7 +138,7 @@ function getCustomer($id)
 								<tr>
 									<td><?= $key + 1 ?></td>
 									<td><?= $value["jenis_batu"] ?></td>
-									<td><?= getCustomer($value["user_id"]) ?></td>
+									<td><?= getCustomer($value["user_np"]) ?></td>
 									<td><?= date('d-m-Y', strtotime($value["tanggal"])) ?></td>
 									<td><?= $value["jumlah"] ?></td>
 									<td><?= $value["total"] ?></td>

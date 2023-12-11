@@ -40,30 +40,12 @@ if (isset($_POST["beli-anjing"])) {
     <section>
         <section>
             <div class="relative z-10" role="dialog" aria-modal="true">
-                <!--
-    Background backdrop, show/hide based on modal state.
 
-    Entering: "ease-out duration-300"
-      From: "opacity-0"
-      To: "opacity-100"
-    Leaving: "ease-in duration-200"
-      From: "opacity-100"
-      To: "opacity-0"
-  -->
                 <div class="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block"></div>
 
                 <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
                     <div class="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
-                        <!--
-        Modal panel, show/hide based on modal state.
 
-        Entering: "ease-out duration-300"
-          From: "opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
-          To: "opacity-100 translate-y-0 md:scale-100"
-        Leaving: "ease-in duration-200"
-          From: "opacity-100 translate-y-0 md:scale-100"
-          To: "opacity-0 translate-y-4 md:translate-y-0 md:scale-95"
-      -->
                         <div class="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
                             <div class="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
                                 <button type="button" class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8">
