@@ -6,28 +6,48 @@ if (!isset($_SESSION['login'])) {
     header('Location: http://localhost/web-rpl/');
     exit;
 }
-if (isset($_SESSION['auth'])) {
-    $user = $_SESSION["auth"];
-    $isAdmin = getDatas("SELECT
-	admins.id AS admin_id,
-	users.id AS user_id,
-	users.name,
-	users.email,
-	users.email_verified_at,
-	admins.no_telp AS admin_no_telp,
-	admins.created_at AS admin_created_at,
-	admins.updated_at AS admin_updated_at
-	FROM
-	admins
-	JOIN
-	users ON admins.user_id = {$user['id']}
-	")[0];
 
-    if (!$isAdmin) {
-        header('Location: http://localhost/web-rpl/resources/views/beranda');
-        exit;
-    }
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "bumipersada";
+$mysqli = new mysqli($servername, $username, $password, $dbname);
+if ($mysqli->connect_error) {
+	die("Connection failed: " . $mysqli->connect_error);
 }
+
+
+if (isset($_SESSION['auth'])) {
+	$user = $_SESSION["auth"];
+
+	$stmt = $mysqli->prepare("SELECT
+        admins.id AS admin_id,
+        users.np AS user_np,
+        users.name,
+        users.email,
+        admins.no_telp AS admin_no_telp,
+        admins.created_at AS admin_created_at,
+        admins.updated_at AS admin_updated_at
+        FROM
+        admins
+        JOIN
+        users ON admins.user_np = users.np
+        WHERE users.np = ?
+        LIMIT 1");
+
+	$stmt->bind_param("s", $user['np']);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$isAdmin = $result->fetch_assoc();
+
+	$stmt->close();
+
+	if (!$isAdmin) {
+		header('Location: http://localhost/web-rpl/resources/views/beranda');
+		exit;
+	}
+}
+
 if (isset($_POST["tambah"])) {
     if (updateStocks() > 0) {
         header("Location: http://localhost/web-rpl/resources/views/dashboard/");
