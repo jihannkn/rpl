@@ -48,15 +48,13 @@ if (isset($_SESSION['auth'])) {
 	}
 }
 
-
-$id = $_GET["id"];
-
-if(deleteCustomer($id) > 0) {
+$np = $_GET["np"];
+if(deleteCustomer($np) > 0) {
     header("Location: http://localhost/web-rpl/resources/views/dashboard/customer/");
 } else {
     echo "
     <script>
-    alert('Data Gagal Dihapus Ah CROT!!!')
+        alert('Data Gagal Dihapus Ah CROT!!!')
     document.location.href = 'http://localhost/web-rpl/resources/views/dashboard/customer/'
     </script>
     ";
