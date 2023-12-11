@@ -14,18 +14,6 @@ function getDatas($query)
 }
 
 
-function storeData()
-{
-    global $connection;
-    $table = "CONTOH";
-    $data1 = $_POST["data_1"];
-    $data2 = $_POST["data_2"];
-
-    $query = "INSERT INTO $table VALUES ('$data1','$data2')";
-    mysqli_query($connection, $query);
-    return mysqli_affected_rows($connection);
-}
-
 function updateStocks()
 {
     global $connection;
@@ -93,12 +81,10 @@ function deleteCustomer($customerId)
 
     return false;
 }
-
 function updateCustomer()
 {
     global $connection;
 
-    // Filter input
     $id = htmlspecialchars($_POST["id"]);
     $oldName = htmlspecialchars($_POST["old_name"]);
     $oldEmail = htmlspecialchars($_POST["old_email"]);
@@ -108,31 +94,44 @@ function updateCustomer()
     $alamat = htmlspecialchars($_POST["alamat"]);
     $noTelp = htmlspecialchars($_POST["no_telp"]);
 
-    // Check for duplicate name or email in users table
-    $userDuplicateChecked = getDatas("SELECT * FROM users WHERE id = '$id'");
-    
-    if ($userDuplicateChecked) {
-        if ($name !== $oldName && strtolower($name) === strtolower($userDuplicateChecked[0]["name"])) {
+    // echo "ID: " . $id . "<br>";
+    // echo "Old Name: " . $oldName . "<br>";
+    // echo "Old Email: " . $oldEmail . "<br>";
+    // echo "Old No Telp: " . $oldNoTelp . "<br>";
+    // echo "Name: " . $name . "<br>";
+    // echo "Email: " . $email . "<br>";
+    // echo "Alamat: " . $alamat . "<br>";
+    // echo "No Telp: " . $noTelp . "<br>";
+    // die;
+
+    $userNameDuplicated = getDatas("SELECT * FROM users WHERE name = '$name'");
+    $userEmailDuplicated = getDatas("SELECT * FROM users WHERE email = '$email'");
+
+    // echo $userNameDuplicated[0]["name"];
+    // echo $userEmailDuplicated[0]["email"];
+    // die;
+    if ($userNameDuplicated) {
+        if (strtolower($name) !== strtolower($oldName) && strtolower($name) === strtolower($userNameDuplicated[0]["name"])) {
             echo "
             <script>
-            alert('Ws enek jeneng seng podo ah CROT.');
+                alert('Ws enek jeneng seng podo ah CROT.');
             </script>
             ";
             return false;
         }
-        if ($email !== $oldEmail && strtolower($email) === strtolower($userDuplicateChecked[0]["email"])) {
+    }
+    if ($userEmailDuplicated) {
+        if (strtolower($email) !== strtolower($oldEmail) && strtolower($email) === strtolower($userEmailDuplicated[0]["email"])) {
             echo "
             <script>
-            alert('Ws enek email seng podo ah CROT.');
+                alert('Ws enek email seng podo ah CROT.');
             </script>
             ";
             return false;
         }
     }
 
-    // Check for duplicate phone number in customers table
-    $customerDuplicateChecked = getDatas("SELECT * FROM customers WHERE user_id = '$id'");
-    
+    $customerDuplicateChecked = getDatas("SELECT * FROM customers WHERE no_telp = '$noTelp'");
     if ($customerDuplicateChecked) {
         if ($noTelp !== $oldNoTelp && $noTelp === $customerDuplicateChecked[0]["no_telp"]) {
             echo "
@@ -143,14 +142,59 @@ function updateCustomer()
             return false;
         }
     }
-
-    // Update users and customers tables
-    $userQuery = "UPDATE users SET name = '$name', email = '$email' WHERE id = '$id'";
-    $customerQuery = "UPDATE customers SET alamat = '$alamat', no_telp = '$noTelp' WHERE user_id = '$id'";
-
-    mysqli_query($connection, $userQuery);
-    mysqli_query($connection, $customerQuery);
+    $query = "UPDATE users u 
+    JOIN customers c ON u.id = c.user_id
+    SET 
+        u.name = '$name', 
+        u.email = '$email',
+        c.alamat = '$alamat',
+        c.no_telp = '$noTelp'
+    WHERE u.id = '$id'";
+    mysqli_query($connection, $query);
 
     return mysqli_affected_rows($connection);
 }
 
+function createCustomer()
+{
+    global $connection;
+
+    $name = htmlspecialchars($_POST["name"]);
+    $email = htmlspecialchars($_POST["email"]);
+    $alamat = htmlspecialchars($_POST["alamat"]);
+    $noTelp = htmlspecialchars($_POST["no_telp"]);
+    $password = htmlspecialchars($_POST["password"]);
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    echo $name . "<br>";
+    echo $email . "<br>";
+    echo $alamat . "<br>";
+    echo $noTelp . "<br>";
+
+    $userNameDuplicated = getDatas("SELECT * FROM users WHERE name = '$name'");
+    $userEmailDuplicated = getDatas("SELECT * FROM users WHERE email = '$email'");
+    if ($userNameDuplicated) {
+        echo "
+            <script>
+                alert('Ws enek jeneng seng podo ah CROT.');
+            </script>
+            ";
+            return false;
+    }
+    if ($userEmailDuplicated) {
+        echo "
+            <script>
+                alert('Ws enek jeneng seng podo ah CROT.');
+            </script>
+            ";
+            return false;
+    }
+
+    $userQuery = "INSERT INTO users (name, email, password,)
+    VALUES ('$name', '$email', '$hashedPassword');
+    ";
+
+    mysqli_query($connection, $userQuery); 
+
+    return mysqli_affected_rows($connection);
+}

@@ -119,7 +119,7 @@ function getCustomer($id)
 									<td><?= $key + 1 ?></td>
 									<td><?= $value["jenis_batu"] ?></td>
 									<td><?= getCustomer($value["user_id"]) ?></td>
-									<td><?= $value["tanggal"] ?></td>
+									<td><?= date('d-m-Y', strtotime($value["tanggal"])) ?></td>
 									<td><?= $value["jumlah"] ?></td>
 									<td><?= $value["total"] ?></td>
 								</tr>

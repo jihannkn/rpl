@@ -9,8 +9,15 @@ if (!isset($_SESSION['login'])) {
 }
 
 if (isset($_POST["beli-anjing"])) {
-    if (setTransaction()) {
+    if (setTransaction() > 0) {
         header("Location: http://localhost/web-rpl/resources/views/beranda/");
+    } else {
+        echo "
+            <script>
+                alert('Transaksi Gagal.')
+                document.location.href = 'http://localhost/web-rpl/resources/views/beranda/'
+            </script>
+        ";
     }
 }
 

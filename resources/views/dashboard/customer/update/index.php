@@ -28,21 +28,6 @@ if (isset($_SESSION['auth'])) {
     }
 }
 $customer_id = $_GET["id"];
-
-// $customer = getDatas("SELECT
-// users.id,
-// users.name,
-// users.email,
-// users.email_verified_at,
-// customers.alamat,
-// customers.no_telp AS customer_no_telp,
-// customers.created_at AS customer_created_at,
-// customers.updated_at AS customer_updated_at
-// FROM
-// users
-// JOIN
-// customers ON users.id = '$customer_id';
-// ")[0];
 $customer = getDatas("SELECT
     users.id,
     users.name,
@@ -60,7 +45,6 @@ WHERE
     users.id = '$customer_id';
 ")[0];
 
-
 if (isset($_POST["update_customer"])) {
     if (updateCustomer() > 0) {
         header("Location: http://localhost/web-rpl/resources/views/dashboard/customer/");
@@ -72,7 +56,6 @@ if (isset($_POST["update_customer"])) {
         ";
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -102,6 +85,7 @@ if (isset($_POST["update_customer"])) {
                                 <div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                     <input type="text" name="name" value="<?= $customer["name"] ?>" class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
                                 </div>
+
                             </div>
                             <label for="username" class="block text-sm font-medium leading-6 text-gray-900 mt-3">Email</label>
                             <div class="mt-2">

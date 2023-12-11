@@ -30,7 +30,8 @@ if (isset($_SESSION['auth'])) {
 }
 
 $id = $_GET["id"];
-if(deleteCustomer($id)) {
+
+if(deleteCustomer($id) > 0) {
     header("Location: http://localhost/web-rpl/resources/views/dashboard/customer/");
 } else {
     echo "
