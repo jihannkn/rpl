@@ -36,6 +36,8 @@ if (isset($_SESSION['auth'])) {
     <title>Document</title>
 </head>
 <body>
-    <h1>Customer Create</h1>
+
+    <h1>bbbb</h1>
+
 </body>
 </html>
