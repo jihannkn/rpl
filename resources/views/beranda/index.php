@@ -6,7 +6,9 @@ if (!isset($_SESSION['login'])) {
     header('Location: http://localhost/web-rpl/');
     exit;
 }
+$username = $_SESSION['auth']['name'];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +36,7 @@ if (!isset($_SESSION['login'])) {
         <div class="flex flex-1 justify-end items-center gap-6">
             <div class="flex items-center gap-2">
                 <i class="fa-regular fa-user text-[14px] font-semibold text-gray-900 text-white"></i>
-                <a href="#" class="text-sm font-semibold leading-6 text-gray-900 text-white">Profile</a>
+                <a href="#" class="text-sm font-semibold leading-6 text-gray-900 text-white"><?= $username ?></a>
             </div>
             <a href="http://localhost/web-rpl/resources/views/logout/" class="text-sm font-semibold leading-6 text-gray-900 text-white">Sign out <span aria-hidden="true">&rarr;</span></a>
         </div>

@@ -47,10 +47,28 @@ if (isset($_SESSION['auth'])) {
 	}
 }
 
+function getLastNp($value)
+{
+	$numericPart = substr($value, 2);
+	$pos = strcspn($numericPart, '0123456789');
+	$numericPrefix = substr($numericPart, 0, $pos);
+	$numericSuffix = substr($numericPart, $pos);
+	$newNumericSuffix = ($numericSuffix !== '') ? (int)$numericSuffix + 1 : 1;
+	$result = 'cs' . $numericPrefix . $newNumericSuffix;
+	return $result;
+}
+$lastNp = getDatas("SELECT MAX(np) AS max_np FROM users")[0];
+$maxNp = $lastNp['max_np'];
+$nextNp = getLastNp($maxNp);
 
-if(isset($_POST["create_customer"])){
-	if(createCustomer() > 0){
-		echo ("<script>alert('Crot')</script>");
+if (isset($_POST["create_customer"])) {
+	if (createCustomer() > 0) {
+		header('Location: http://localhost/web-rpl/resources/views/dashboard/customer/');
+	} else {
+		echo "<script>
+				alert('Gagal Crot')
+				document.location.href = 'http://localhost/web-rpl/resources/views/dashboard/customer/'
+			  </script>";
 	}
 }
 
@@ -74,6 +92,12 @@ if(isset($_POST["create_customer"])){
 					<h2 class="text-xl font-bold leading-7 text-gray-900">Tambah Data</h2>
 					<div class="mt-7 grid grid-cols-1 gap-x-6 gap-y-8 ">
 						<div class="sm:col-span-4">
+							<label for="np" class="block text-sm font-medium leading-6 text-gray-900">Nomor Pelanggan</label>
+							<div class="mt-2">
+								<div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+									<input type="text" name="np" value="<?= $nextNp ?>" class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" readonly>
+								</div>
+							</div>
 							<label for="name" class="block text-sm font-medium leading-6 text-gray-900">Nama</label>
 							<div class="mt-2">
 								<div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -86,13 +110,13 @@ if(isset($_POST["create_customer"])){
 									<input type="email" name="email" class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
 								</div>
 							</div>
-							<label for="username" class="block text-sm font-medium leading-6 text-gray-900 mt-3">Alamat</label>
+							<label for="alamat" class="block text-sm font-medium leading-6 text-gray-900 mt-3">Alamat</label>
 							<div class="mt-2">
 								<div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
 									<input type="text" name="alamat" class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
 								</div>
 							</div>
-							<label for="username" class="block text-sm font-medium leading-6 text-gray-900 mt-3">No Telephone</label>
+							<label for="no_telp" class="block text-sm font-medium leading-6 text-gray-900 mt-3">No Telephone</label>
 							<div class="mt-2">
 								<div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
 									<input type="text" name="no_telp" class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6">
