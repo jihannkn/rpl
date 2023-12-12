@@ -142,7 +142,7 @@ customers ON users.np = customers.user_np;
 							<?php foreach ($customers as $key => $customer) : ?>
 								<tr>
 									<td><?= $key + 1  ?></td>
-									<td><?= $customer["name"]  ?></td>
+									<td><?= strtoupper($customer["name"])  ?></td>
 									<td>
 										<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop<?= $customer["np"] ?>">
 											Detail
@@ -166,13 +166,13 @@ customers ON users.np = customers.user_np;
 									</div>
 									<div class="modal-body">
 										<div>
-											<span>Nama PT : <?= $customer["name"] ?></span>
+											<span>Nama PT : <?= strtoupper($customer["name"]) ?></span>
 										</div>
 										<div>
 											<span>Email PT : <?= $customer["email"] ?></span>
 										</div>
 										<div>
-											<span>Alamat PT : <?= $customer["alamat"] ?></span>
+											<span>Alamat PT : <?= strtoupper($customer["alamat"]) ?></span>
 										</div>
 										<div>
 											<span>No Telephone PT : <?= $customer["customer_no_telp"] ?></span>

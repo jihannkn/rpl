@@ -124,7 +124,7 @@ function deleteCustomer($userNp)
 function createCustomer()
 {
     global $connection;
-
+    $np = htmlspecialchars($_POST["np"]);
     $name = htmlspecialchars($_POST["name"]);
     $email = htmlspecialchars($_POST["email"]);
     $alamat = htmlspecialchars($_POST["alamat"]);
@@ -132,35 +132,40 @@ function createCustomer()
     $password = htmlspecialchars($_POST["password"]);
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    echo $name . "<br>";
-    echo $email . "<br>";
-    echo $alamat . "<br>";
-    echo $noTelp . "<br>";
-
     $userNameDuplicated = getDatas("SELECT * FROM users WHERE name = '$name'");
     $userEmailDuplicated = getDatas("SELECT * FROM users WHERE email = '$email'");
+
     if ($userNameDuplicated) {
         echo "
-            <script>
-                alert('Ws enek jeneng seng podo ah CROT.');
-            </script>
-            ";
+        <script>
+        alert('Ws enek jeneng seng podo ah CROT.');
+        </script>
+        ";
         return false;
     }
     if ($userEmailDuplicated) {
         echo "
-            <script>
-                alert('Ws enek jeneng seng podo ah CROT.');
-            </script>
-            ";
+        <script>
+        alert('Ws enek email seng podo ah CROT.');
+        </script>
+        ";
         return false;
     }
 
-    $userQuery = "INSERT INTO users (name, email, password,)
-    VALUES ('$name', '$email', '$hashedPassword');
-    ";
+    $userTelpDuplicated = getDatas("SELECT * FROM customers WHERE no_telp = '$noTelp'");
 
-    mysqli_query($connection, $userQuery);
+    if ($userTelpDuplicated) {
+        echo "
+        <script>
+        alert('Ws enek nomer seng podo ah CROT.');
+        </script>
+        ";
+        return false;
+    }
+
+    $query = "INSERT INTO users (np, name, email, password) VALUES ('$np', '$name', '$email', '$hashedPassword'); INSERT INTO customers (user_np, alamat, no_telp) VALUES ('$np', '$alamat', '$noTelp')";
+
+    mysqli_multi_query($connection, $query);
 
     return mysqli_affected_rows($connection);
 }
