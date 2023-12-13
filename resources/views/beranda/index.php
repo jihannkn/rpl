@@ -16,12 +16,7 @@ $username = $_SESSION['auth']['name'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -37,6 +32,10 @@ $username = $_SESSION['auth']['name'];
             <div class="flex items-center gap-2">
                 <i class="fa-regular fa-user text-[14px] font-semibold text-gray-900 text-white"></i>
                 <a href="#" class="text-sm font-semibold leading-6 text-gray-900 text-white"><?= $username ?></a>
+            </div>
+            <div class="flex items-center gap-1">
+                <i class="fa-solid fa-cart-shopping text-[14px] font-semibold text-gray-900 text-white"></i>
+                <a href="#" class="text-sm font-semibold leading-6 text-gray-900 text-white">Carts</a>
             </div>
             <a href="http://localhost/web-rpl/resources/views/logout/" class="text-sm font-semibold leading-6 text-gray-900 text-white">Sign out <span aria-hidden="true">&rarr;</span></a>
         </div>
