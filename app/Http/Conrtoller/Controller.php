@@ -169,3 +169,11 @@ function createCustomer()
 
     return mysqli_affected_rows($connection);
 }
+
+
+function userDeteleTransaction($id) {
+    global $connection;
+    $query = "DELETE FROM transactions WHERE id = '$id'";
+    mysqli_query($connection, $query);
+    return mysqli_affected_rows($connection);
+}
