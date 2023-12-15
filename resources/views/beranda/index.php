@@ -35,7 +35,7 @@ $username = $_SESSION['auth']['name'];
             </div>
             <div class="flex items-center gap-1">
                 <i class="fa-solid fa-cart-shopping text-[14px] font-semibold text-gray-900 text-white"></i>
-                <a href="#" class="text-sm font-semibold leading-6 text-gray-900 text-white">Carts</a>
+                <a href="http://localhost/web-rpl/resources/views/beranda/carts" class="text-sm font-semibold leading-6 text-gray-900 text-white">Carts</a>
             </div>
             <a href="http://localhost/web-rpl/resources/views/logout/" class="text-sm font-semibold leading-6 text-gray-900 text-white">Sign out <span aria-hidden="true">&rarr;</span></a>
         </div>
