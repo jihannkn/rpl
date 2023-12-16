@@ -47,6 +47,8 @@ if (isset($_SESSION['auth'])) {
 	}
 }
 
+$statements = getDatas('SELECT * FROM statements');
+
 ?>
 
 <!doctype html>
@@ -62,6 +64,7 @@ if (isset($_SESSION['auth'])) {
 	<!-- Custom styles for this template -->
 	<link href="../dashboard.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -115,30 +118,37 @@ if (isset($_SESSION['auth'])) {
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 					<h1 class="h2">Laporan</h1>
+					<a href="http://localhost/web-rpl/resources/views/dashboard/laporan/create" class="btn btn-primary btn-sm">Buat Laporan</a>
 				</div>
 				<div class="table-responsive">
 					<table class="table table-striped table-sm">
 						<thead>
 							<tr>
 								<th scope="col">No</th>
-								<th scope="col">Tanggal Transaksi</th>
-								<th scope="col">Admin</th>
-								<th scope="col">Nama Customer</th>
+								<th scope="col">Tanggal Laporan</th>
 								<th scope="col">Jenis Batu</th>
 								<th scope="col">Jumlah Pembelian</th>
 								<th scope="col">Total</th>
+								<th scope="col">Cetak</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1,001</td>
-								<td>random</td>
-								<td>data</td>
-								<td>placeholder</td>
-								<td>text</td>
-								<td>sdf</td>
-								<td>dfd</td>
-							</tr>
+							<?php if(count($statements) > 0) : ?>
+								<?php foreach ($statements as $key => $value) : ?>
+									<tr>
+										<td><?= $key + 1 ?></td>
+										<td><?= date('d-m-Y', strtotime($value["tanggal"])) ?></td>
+										<td><?= $value["jenis_batu"] ?></td>
+										<td><?= $value["jumlah_batu_terjual"] ?></td>
+										<td><?= $value["jumlah_pendapatan"] ?></td>
+										<td><a href="" class="btn btn-sm btn-success"><i class="fa-solid fa-print"></i></a></td>
+									</tr>
+								<?php endforeach; ?>
+							<?php else : ?>
+								<tr>
+									<td colspan="5" class="text-center fs-5 text-info">Tidak Ada Laporan Bangsat</td>
+								</tr>
+							<?php endif; ?>
 						</tbody>
 					</table>
 				</div>
