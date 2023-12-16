@@ -171,9 +171,36 @@ function createCustomer()
 }
 
 
-function userDeteleTransaction($id) {
+function userDeteleTransaction($id)
+{
     global $connection;
     $query = "DELETE FROM transactions WHERE id = '$id'";
     mysqli_query($connection, $query);
+    return mysqli_affected_rows($connection);
+}
+
+function createStatement()
+{
+    global $connection;
+    $nomor = $_POST["nomor_laporan"];
+    $tanggal = $_POST["tanggal"];
+
+    $jenis1 = $_POST['jenis_batu_zeolite'];
+    $terjual1 = $_POST['batu_terjual_zeolite'];
+    $transaksi1 = $_POST['jumlah_transaksi_zeolite'];
+    $pendapatan1 = $_POST['jumlah_pendapatan_zeolite'];
+
+
+    $jenis2 = $_POST['jenis_batu_balok'];
+    $terjual2 = $_POST['batu_terjual_balok'];
+    $transaksi2 = $_POST['jumlah_transaksi_balok'];
+    $pendapatan2 = $_POST['jumlah_pendapatan_balok'];
+
+    $query1 = "INSERT INTO statements (nomor_laporan, tanggal, jenis_batu, jumlah_batu_terjual, jumlah_transaksi, jumlah_pendapatan) VALUES ('$nomor','$tanggal','$jenis1','$terjual1','$transaksi1','$pendapatan1')"; 
+    $query2 = "INSERT INTO statements (nomor_laporan, tanggal, jenis_batu, jumlah_batu_terjual, jumlah_transaksi, jumlah_pendapatan) VALUES ('$nomor','$tanggal','$jenis2','$terjual2','$transaksi2','$pendapatan2')";
+
+    mysqli_query($connection, $query1);
+    mysqli_query($connection, $query2);
+
     return mysqli_affected_rows($connection);
 }
