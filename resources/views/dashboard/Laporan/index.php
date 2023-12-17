@@ -48,7 +48,6 @@ if (isset($_SESSION['auth'])) {
 }
 
 $statements = getDatas('SELECT * FROM statements');
-
 ?>
 
 <!doctype html>
@@ -69,7 +68,7 @@ $statements = getDatas('SELECT * FROM statements');
 
 <body>
 
-	<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+	<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow d-print-none">
 		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="http://localhost/web-rpl/resources/views/beranda">Bumi Indah Persada</a>
 		<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -82,7 +81,7 @@ $statements = getDatas('SELECT * FROM statements');
 		</div>
 	</header>
 
-	<div class="container-fluid">
+	<div class="container-fluid d-print-none">
 		<div class="row">
 			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
 				<div class="position-sticky pt-3">
@@ -133,7 +132,7 @@ $statements = getDatas('SELECT * FROM statements');
 							</tr>
 						</thead>
 						<tbody>
-							<?php if(count($statements) > 0) : ?>
+							<?php if (count($statements) > 0) : ?>
 								<?php foreach ($statements as $key => $value) : ?>
 									<tr>
 										<td><?= $key + 1 ?></td>
@@ -141,7 +140,7 @@ $statements = getDatas('SELECT * FROM statements');
 										<td><?= $value["jenis_batu"] ?></td>
 										<td><?= $value["jumlah_batu_terjual"] ?></td>
 										<td><?= $value["jumlah_pendapatan"] ?></td>
-										<td><a href="" class="btn btn-sm btn-success"><i class="fa-solid fa-print"></i></a></td>
+										<td><a href="http://localhost/web-rpl/resources/views/dashboard/laporan/cetak" class="btn btn-sm btn-success"><i class="fa-solid fa-print"></i></a></td>
 									</tr>
 								<?php endforeach; ?>
 							<?php else : ?>
@@ -155,7 +154,6 @@ $statements = getDatas('SELECT * FROM statements');
 			</main>
 		</div>
 	</div>
-	<!-- Js -->
 	<script src="../dashboard.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
