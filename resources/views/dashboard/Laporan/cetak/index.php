@@ -1,3 +1,15 @@
+<?php
+session_start();
+require("../../../../../app/Http/Conrtoller/Controller.php");
+if (!isset($_SESSION['login'])) {
+    header('Location: http://localhost/web-rpl/');
+    exit;
+}
+
+$noLap = $_GET['nomor'];
+$statements = getDatas("SELECT * FROM statements WHERE nomor_laporan = '$noLap'");
+$total = getDatas("SELECT SUM(jumlah_pendapatan) AS total FROM statements")[0];
+?>
 <!DOCTYPE html>
 <html>
 
@@ -8,6 +20,7 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
+            padding: 10px;
         }
 
         .kop {
@@ -53,6 +66,11 @@
             margin-top: 20px;
             text-align: right;
         }
+        @media print {
+            #btn-print {
+                display: none;
+            }
+        }
     </style>
 </head>
 
@@ -71,33 +89,32 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nama Perusahaan</th>
+                    <th>Tanggal</th>
                     <th>Jenis Batu</th>
+                    <th>Jumlah Transaksi</th>
                     <th>Jumlah Pembelian</th>
                     <th>Harga</th>
-                    <th>Tanggal</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Data laporan diletakkan di sini -->
-                <!-- Contoh baris data -->
-                <tr>
-                    <td>1</td>
-                    <td>Nama Perusahaan A</td>
-                    <td>Batu X</td>
-                    <td>100</td>
-                    <td>50000</td>
-                    <td>2023-12-01</td>
-                </tr>
-                <!-- Baris data lainnya akan ditempatkan di sini -->
+                <?php foreach ($statements as $key => $value) : ?>
+                    <tr>
+                        <td><?= $key + 1 ?></td>
+                        <td><?= date('d-m-Y',strtotime($value['tanggal'])) ?></td>
+                        <td><?= $value['jenis_batu'] ?></td>
+                        <td><?= $value['jumlah_transaksi'] ?></td>
+                        <td><?= $value['jumlah_batu_terjual'] ?></td>
+                        <td><?= $value['jumlah_pendapatan'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
 
     <div class="total">
         <h2>Total:</h2>
-        <p><strong>Jumlah barang dibeli:</strong> <span id="total_barang">...</span></p>
-        <p><strong>Harga (Jumlah uang selama sebulan):</strong> <span id="total_harga">...</span></p>
+        <!-- <p><strong>Jumlah barang dibeli:</strong> <span id="total_barang">...</span></p> -->
+        <p><strong>Harga (Jumlah uang selama sebulan):</strong> <span id="total_harga"><?= $total['total'] ?></span></p>
     </div>
 
     <div class="mengetahui">
@@ -105,8 +122,13 @@
         <p>Admin</p>
         <p>_________</p>
     </div>
+    <div>
+        <button id="btn-print" class="" onclick="cetakPrintCrot()">Cetak</button>
+    </div>
     <script>
-        window.print()
+        const cetakPrintCrot = () => {
+            window.print()
+        }
     </script>
 </body>
 
