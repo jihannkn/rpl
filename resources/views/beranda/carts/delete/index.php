@@ -7,8 +7,9 @@ if (!isset($_SESSION['login'])) {
 }
 
 $transactionId = $_GET['id'];
+$jenisBatu = $_GET['jenis'];
 
-if(userDeteleTransaction($transactionId) > 0){
+if(userDeteleTransaction($transactionId, $jenisBatu) > 0){
     echo "
         <script>
             alert('Transaksi telah dibatalkan.');
