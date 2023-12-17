@@ -171,11 +171,18 @@ function createCustomer()
 }
 
 
-function userDeteleTransaction($id)
+function userDeteleTransaction($id, $jenis)
 {
     global $connection;
-    $query = "DELETE FROM transactions WHERE id = '$id'";
-    mysqli_query($connection, $query);
+    $transactions = getDatas("SELECT * FROM transactions WHERE id = '$id'")[0];
+    $stocks = getDatas("SELECT * FROM stocks WHERE jenis = '$jenis'")[0];
+    $jumlahStocks = $stocks["jumlah_stok"];
+    $jumlahCancel = $transactions["jumlah"];
+    $jumlahTotal = $jumlahStocks + $jumlahCancel;
+    $query1 = "DELETE FROM transactions WHERE id = '$id'";
+    $query2 = "UPDATE stocks SET jumlah_stok = '$jumlahTotal' WHERE jenis = '$jenis'";
+    mysqli_query($connection, $query1);
+    mysqli_query($connection, $query2);
     return mysqli_affected_rows($connection);
 }
 

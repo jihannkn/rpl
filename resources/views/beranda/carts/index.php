@@ -43,7 +43,7 @@ $transactions = getDatas("SELECT * FROM transactions WHERE user_np = '$userId'")
                   </div>
                   <div class="flex items-center space-x-4">
                     <p class="text-sm"><?= $value['total'] ?></p>
-                    <a href="http://localhost/web-rpl/resources/views/beranda/carts/delete?id=<?=$value['id']?>" onclick="confirm('yakin membatalkan?')">
+                    <a href="http://localhost/web-rpl/resources/views/beranda/carts/delete?id=<?=$value['id']?>&jenis=<?= $value['jenis_batu'] ?>" onclick="confirm('yakin membatalkan?')">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                       </svg>
