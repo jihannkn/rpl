@@ -15,7 +15,6 @@ if ($mysqli->connect_error) {
 	die("Connection failed: " . $mysqli->connect_error);
 }
 
-
 if (isset($_SESSION['auth'])) {
 	$user = $_SESSION["auth"];
 

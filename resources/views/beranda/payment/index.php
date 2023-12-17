@@ -10,7 +10,12 @@ if (!isset($_SESSION['login'])) {
 
 if (isset($_POST["beli-anjing"])) {
     if (setTransaction() > 0) {
-        header("Location: http://localhost/web-rpl/resources/views/beranda/");
+        echo "
+            <script>
+                alert('Transaksi Berhasil HIP HIP AH AH CROT.')
+                document.location.href = 'http://localhost/web-rpl/resources/views/beranda/'
+            </script>
+        ";
     } else {
         echo "
             <script>

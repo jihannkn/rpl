@@ -1,10 +1,11 @@
 <?php
+session_start();
 require("../../../../../app/Http/Conrtoller/Controller.php");
 
-// if (!isset($_SESSION['login'])) {
-// 	header('Location: http://localhost/web-rpl/');
-// 	exit;
-// }
+if (!isset($_SESSION['login'])) {
+	header('Location: http://localhost/web-rpl/');
+	exit;
+}
 
 $servername = "localhost";
 $username = "root";
@@ -12,14 +13,13 @@ $password = "";
 $dbname = "bumipersada";
 $mysqli = new mysqli($servername, $username, $password, $dbname);
 if ($mysqli->connect_error) {
-	die("Connection failed: " . $mysqli->connect_error);
+    die("Connection failed: " . $mysqli->connect_error);
 }
 
-
 if (isset($_SESSION['auth'])) {
-	$user = $_SESSION["auth"];
+    $user = $_SESSION["auth"];
 
-	$stmt = $mysqli->prepare("SELECT
+    $stmt = $mysqli->prepare("SELECT
         admins.id AS admin_id,
         users.np AS user_np,
         users.name,
@@ -34,17 +34,17 @@ if (isset($_SESSION['auth'])) {
         WHERE users.np = ?
         LIMIT 1");
 
-	$stmt->bind_param("s", $user['np']);
-	$stmt->execute();
-	$result = $stmt->get_result();
-	$isAdmin = $result->fetch_assoc();
+    $stmt->bind_param("s", $user['np']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $isAdmin = $result->fetch_assoc();
 
-	$stmt->close();
+    $stmt->close();
 
-	if (!$isAdmin) {
-		header('Location: http://localhost/web-rpl/resources/views/beranda');
-		exit;
-	}
+    if (!$isAdmin) {
+        header('Location: http://localhost/web-rpl/resources/views/beranda');
+        exit;
+    }
 }
 
 function getLastNL($mysqli)
@@ -79,8 +79,8 @@ $totalPendapatanBalok = getDatas('SELECT SUM(total) AS total_semua FROM transact
 $totalTerjualZeolite = getDatas('SELECT SUM(jumlah) AS jumlah_batu FROM transactions WHERE jenis_batu = "Zeolite"')[0];
 $totalTerjualBalok = getDatas('SELECT SUM(jumlah) AS jumlah_batu FROM transactions WHERE jenis_batu = "Balok"')[0];
 
-if($_SERVER["REQUEST_METHOD"] === "POST") {
-    if(createStatement() > 0) {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if (createStatement() > 0) {
         echo "
             <script>
                 alert('data berhasil ditambahkan ah crot');
@@ -146,7 +146,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
                 <div>
                     <label for="">Jumlah Batu Terjual</label>
-                    <input type="text"  name="batu_terjual_balok" value="<?= $totalTerjualBalok['jumlah_batu'] ?>" readonly>
+                    <input type="text" name="batu_terjual_balok" value="<?= $totalTerjualBalok['jumlah_batu'] ?>" readonly>
                 </div>
                 <div>
                     <label for="">Jumlah Transaksi</label>
