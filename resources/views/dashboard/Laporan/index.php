@@ -140,7 +140,7 @@ $statements = getDatas('SELECT * FROM statements');
 										<td><?= $value["jenis_batu"] ?></td>
 										<td><?= $value["jumlah_batu_terjual"] ?></td>
 										<td><?= $value["jumlah_pendapatan"] ?></td>
-										<td><a href="http://localhost/web-rpl/resources/views/dashboard/laporan/cetak" class="btn btn-sm btn-success"><i class="fa-solid fa-print"></i></a></td>
+										<td><a href="http://localhost/web-rpl/resources/views/dashboard/laporan/cetak?nomor=<?=$value['nomor_laporan']?>" class="btn btn-sm btn-success"><i class="fa-solid fa-print"></i></a></td>
 									</tr>
 								<?php endforeach; ?>
 							<?php else : ?>
