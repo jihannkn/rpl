@@ -127,7 +127,7 @@ $statements = getDatas('SELECT * FROM statements');
 								<th scope="col">Jenis Batu</th>
 								<th scope="col">Jumlah Pembelian</th>
 								<th scope="col">Total</th>
-								<th scope="col">Cetak</th>
+								<th scope="col">Actions</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -139,17 +139,42 @@ $statements = getDatas('SELECT * FROM statements');
 										<td><?= $value["jenis_batu"] ?></td>
 										<td><?= $value["jumlah_batu_terjual"] ?></td>
 										<td><?= $value["jumlah_pendapatan"] ?></td>
-										<td><a href="http://localhost/web-rpl/resources/views/dashboard/laporan/cetak?nomor=<?=$value['nomor_laporan']?>" class="btn btn-sm btn-success"><i class="fa-solid fa-print"></i></a></td>
+										<td>
+											<a href="http://localhost/web-rpl/resources/views/dashboard/laporan/cetak?nomor=<?=$value['nomor_laporan']?>" class="btn btn-sm btn-success"><i class="fa-solid fa-print"></i></a>
+											<button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete<?= $value["nomor_laporan"] ?>">
+											<i class="fa-solid fa-trash"></i>
+										</button>
+										</td>
+										
 									</tr>
 								<?php endforeach; ?>
 							<?php else : ?>
 								<tr>
-									<td colspan="5" class="text-center fs-5 text-info">Tidak Ada Laporan Bangsat</td>
+									<td colspan="6" class="text-center fs-5 text-info p-4">Tidak Ada Laporan Bangsat CROT CROT CROT</td>
 								</tr>
 							<?php endif; ?>
 						</tbody>
 					</table>
 				</div>
+				<?php foreach ($statements as $key => $statement) : ?>
+						<div class="modal fade" id="staticBackdropDelete<?= $statement["nomor_laporan"] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Perusahaan</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<span>Yakin dek dihapus ?</span>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+										<a href="http://localhost/web-rpl/resources/views/dashboard/laporan/delete?nomor_laporan=<?= $statement["nomor_laporan"] ?>" type="button" class="btn btn-danger text-white">Delete</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					<?php endforeach; ?>
 			</main>
 		</div>
 	</div>

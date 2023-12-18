@@ -48,6 +48,28 @@ if (isset($_SESSION['auth'])) {
 $noLap = $_GET['nomor'];
 $statements = getDatas("SELECT * FROM statements WHERE nomor_laporan = '$noLap'");
 $total = getDatas("SELECT SUM(jumlah_pendapatan) AS total FROM statements")[0];
+
+function bulanIndonesia($angkaBulan) {
+    $daftarBulan = [
+        1 => 'Januarianto',
+        2 => 'Februarikriting',
+        3 => 'Maretono',
+        4 => 'Aprilianadewiputri',
+        5 => 'Mei-Mei Susanti',
+        6 => 'Juniadi',
+        7 => 'Juliyantoro',
+        8 => 'Agustus',
+        9 => 'Septemberasasusu',
+        10 => 'Oktobersamadia',
+        11 => 'Novemberentoentod',
+        12 => 'Desemberanakapinak',
+    ];
+
+    return $daftarBulan[$angkaBulan];
+}
+$tanggal = $statements[0]['tanggal'];
+$angkaBulan = date('n', strtotime($tanggal));
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -109,6 +131,9 @@ $total = getDatas("SELECT SUM(jumlah_pendapatan) AS total FROM statements")[0];
             #btn-print {
                 display: none;
             }
+            #btn-back {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -116,7 +141,7 @@ $total = getDatas("SELECT SUM(jumlah_pendapatan) AS total FROM statements")[0];
 <body>
     <div class="kop">
         <p>PT. BUMI INDAH PERSADA</p>
-        <p>LAPORAN BULAN....</p>
+        <p>LAPORAN BULAN <?= strtoupper(bulanIndonesia($angkaBulan)) ?></p>
         <p>Jalan Masjid Kalidahu RT.011 RW.005 Desa Ngeni Kecamatan Wonotirto.</p>
         <p>No.Telp : 085756849375</p>
         <hr>
@@ -162,7 +187,8 @@ $total = getDatas("SELECT SUM(jumlah_pendapatan) AS total FROM statements")[0];
         <p>_________</p>
     </div>
     <div>
-        <button id="btn-print" class="" onclick="cetakPrintCrot()">Cetak</button>
+        <a id="btn-back" href="http://localhost/web-rpl/resources/views/dashboard/laporan/" class="btn btn-sm btn-primaru">Kembali</a>
+        <button id="btn-print" class="" onclick="cetakPrintCrot()">Print</button>
     </div>
     <script>
         const cetakPrintCrot = () => {

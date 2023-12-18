@@ -211,3 +211,10 @@ function createStatement()
 
     return mysqli_affected_rows($connection);
 }
+
+function deleteStatements($noLaporan) {
+    global $connection;
+    $query = "DELETE FROM statements WHERE nomor_laporan = '$noLaporan'";
+    mysqli_query($connection, $query); 
+    return mysqli_affected_rows($connection);
+}
