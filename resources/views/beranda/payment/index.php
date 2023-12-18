@@ -12,7 +12,7 @@ if (isset($_POST["beli-anjing"])) {
     if (setTransaction() > 0) {
         echo "
             <script>
-                alert('Transaksi Berhasil HIP HIP AH AH CROT.')
+                alert('Transaksi Berhasil.')
                 document.location.href = 'http://localhost/web-rpl/resources/views/beranda/'
             </script>
         ";

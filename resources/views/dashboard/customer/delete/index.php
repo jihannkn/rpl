@@ -54,7 +54,7 @@ if(deleteCustomer($np) > 0) {
 } else {
     echo "
     <script>
-        alert('Data Gagal Dihapus Ah CROT!!!')
+        alert('Data Gagal Dihapus')
     document.location.href = 'http://localhost/web-rpl/resources/views/dashboard/customer/'
     </script>
     ";

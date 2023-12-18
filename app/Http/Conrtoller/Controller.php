@@ -76,18 +76,18 @@ function updateCustomer()
     $userEmailDuplicated = getDatas("SELECT * FROM users WHERE email = '$email'");
 
     if ($userNameDuplicated && strtolower($name) !== strtolower($oldName) && strtolower($name) === strtolower($userNameDuplicated[0]["name"])) {
-        echo "<script>alert('Ws enek jeneng seng podo ah CROT.');</script>";
+        echo "<script>alert('Nama sudah digunakan');</script>";
         return false;
     }
 
     if ($userEmailDuplicated && strtolower($email) !== strtolower($oldEmail) && strtolower($email) === strtolower($userEmailDuplicated[0]["email"])) {
-        echo "<script>alert('Ws enek email seng podo ah CROT.');</script>";
+        echo "<script>alert('Email sudah digunakan');</script>";
         return false;
     }
 
     $customerDuplicateChecked = getDatas("SELECT * FROM customers WHERE no_telp = '$noTelp'");
     if ($customerDuplicateChecked && $noTelp !== $oldNoTelp && $noTelp === $customerDuplicateChecked[0]["no_telp"]) {
-        echo "<script>alert('Ws enek nomer seng podo ah CROT.');</script>";
+        echo "<script>alert('Nomor sudah digunakan');</script>";
         return false;
     }
 
@@ -138,7 +138,7 @@ function createCustomer()
     if ($userNameDuplicated) {
         echo "
         <script>
-        alert('Ws enek jeneng seng podo ah CROT.');
+        alert('Nama sudah digunakan');
         </script>
         ";
         return false;
@@ -146,7 +146,7 @@ function createCustomer()
     if ($userEmailDuplicated) {
         echo "
         <script>
-        alert('Ws enek email seng podo ah CROT.');
+        alert('Email sudah digunakan.');
         </script>
         ";
         return false;
@@ -157,7 +157,7 @@ function createCustomer()
     if ($userTelpDuplicated) {
         echo "
         <script>
-        alert('Ws enek nomer seng podo ah CROT.');
+        alert('Nomor sudah digunakan');
         </script>
         ";
         return false;

@@ -56,8 +56,8 @@ $transactions = getDatas("SELECT * FROM transactions WHERE user_np = '$userId'")
 
           <?php else :  ?>
 
-            <h1>Beli dulu lah anjeng</h1>
-            <a href="http://localhost/web-rpl/resources/views/beranda">Belanja Dulu Lah Pantek</a>
+            <h1>Beli dulu lah </h1>
+            <a href="http://localhost/web-rpl/resources/views/beranda">Belanja Dulu Lah </a>
 
           <?php endif; ?>
         </div>

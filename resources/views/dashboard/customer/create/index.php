@@ -66,7 +66,7 @@ if (isset($_POST["create_customer"])) {
 		header('Location: http://localhost/web-rpl/resources/views/dashboard/customer/');
 	} else {
 		echo "<script>
-				alert('Gagal Crot')
+				alert('Data Gagal Ditambahkan')
 				document.location.href = 'http://localhost/web-rpl/resources/views/dashboard/customer/'
 			  </script>";
 	}

@@ -150,7 +150,7 @@ $statements = getDatas('SELECT * FROM statements');
 								<?php endforeach; ?>
 							<?php else : ?>
 								<tr>
-									<td colspan="6" class="text-center fs-5 text-info p-4">Tidak Ada Laporan Bangsat CROT CROT CROT</td>
+									<td colspan="6" class="text-center fs-5 text-info p-4">Tidak Ada Laporan</td>
 								</tr>
 							<?php endif; ?>
 						</tbody>
@@ -165,7 +165,7 @@ $statements = getDatas('SELECT * FROM statements');
 										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 									</div>
 									<div class="modal-body">
-										<span>Yakin dek dihapus ?</span>
+										<span>Yakin dihapus?</span>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

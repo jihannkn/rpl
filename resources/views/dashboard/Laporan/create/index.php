@@ -3,8 +3,8 @@ session_start();
 require("../../../../../app/Http/Conrtoller/Controller.php");
 
 if (!isset($_SESSION['login'])) {
-	header('Location: http://localhost/web-rpl/');
-	exit;
+    header('Location: http://localhost/web-rpl/');
+    exit;
 }
 
 $servername = "localhost";
@@ -83,14 +83,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (createStatement() > 0) {
         echo "
             <script>
-                alert('data berhasil ditambahkan ah crot');
+                alert('Data Berhasil Ditambahkan');
                 document.location.href = 'http://localhost/web-rpl/resources/views/dashboard/laporan'
             </script>
         ";
     } else {
         echo "
             <script>
-                alert('data gagal ditambahkan ah crot');
+                alert('Data Gagal Ditambahkan');
                 document.location.href = 'http://localhost/web-rpl/resources/views/dashboard/laporan'
             </script>
         ";
@@ -109,57 +109,115 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
-    <a href="http://localhost/web-rpl/resources/views/dashboard/laporan/">Kembali</a>
-    <form action="" method="post" class="w-full bg-cyan-500 h-screen flex flex-col justify-center items-center gap-5">
-        <div>
-            <label for="">No Laporan</label>
-            <input type="text" name="nomor_laporan" value="<?= $nextNl ?>" readonly>
-        </div>
-        <div>
-            <label for="">Tanggal Laporan</label>
-            <input type="date" name="tanggal" value="<?= date("Y-m-d") ?>" readonly>
-        </div>
-        <div class="flex gap-5">
-            <div class="border-2 p-5 border-black">
-                <div>
-                    <label for="">Jenis Batu</label>
-                    <input type="text" name="jenis_batu_zeolite" value="Zeolite">
-                </div>
-                <div>
-                    <label for="">Jumlah Batu Terjual</label>
-                    <input type="text" name="batu_terjual_zeolite" value="<?= $totalTerjualZeolite['jumlah_batu'] ?>" readonly>
-                </div>
-                <div>
-                    <label for="">Jumlah Transaksi</label>
-                    <input type="text" name="jumlah_transaksi_zeolite" value="<?= count($transactionZeolite) ?>" readonly>
-                </div>
-                <div>
-                    <label for="">Jumlah Pendapatan</label>
-                    <input type="text" name="jumlah_pendapatan_zeolite" value="<?= $totalPendapatanZeolite['total_semua'] ?>" readonly>
+    <form action="" method="post" class="w-full h-full flex justify-center items-center py-[50px]">
+        <div class="space-y-5 rounded-md shadow-sm border-[1.5px] p-3 w-[70%]">
+            <div class="border-b border-gray-900/10 pb-8 w-full flex justify-center items-center">
+                <div class="w-[80%] mt-3">
+                    <h2 class="text-xl font-bold leading-7 text-gray-900">
+                        Buat Laporan
+                    </h2>
+                    <div class="mt-7 grid grid-cols-1 gap-x-6 gap-y-8">
+                        <div class="sm:col-span-4">
+                            <div class="flex justify-center items-center w-full gap-[10px]">
+                                <label for="" class="block text-sm font-medium leading-6 text-gray-900">No Laporan</label>
+                                <div class="mt-2 w-[50%]">
+                                    <div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 w-full">
+                                        <input type="text" name="nomor_laporan" value="<?= $nextNl ?>" readonly class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-center items-center w-full gap-[10px]">
+                                <label for="" class="block text-sm font-medium leading-6 text-gray-900">Tanggal Laporan</label>
+                                <div class="mt-2 w-[50%]">
+                                    <div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                        <input type="date" name="tanggal" value="<?= date("Y-m-d") ?>" readonly class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bungkus w-full flex gap-[15px] mt-[20px]">
+                                <div class="kiri w-[50%]">
+                                    <div class="flex justify-between items-center w-full">
+                                        <label for="" class="block text-sm font-medium leading-6 text-gray-900">Jenis Batu
+                                        </label>
+                                        <div class="mt-2 w-[70%]">
+                                            <div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                <input type="text" name="jenis_batu_zeolite" value="Zeolite" class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-center w-full">
+                                        <label for="" class="block text-sm font-medium leading-6 text-gray-900">Jumlah Batu Terjual</label>
+                                        <div class="mt-2 w-[60%]">
+                                            <div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                <input type="text" name="batu_terjual_zeolite" value="<?= $totalTerjualZeolite['jumlah_batu'] ?>" readonly class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-center w-full">
+                                        <label for="" class="block text-sm font-medium leading-6 text-gray-900">Jumlah Transaksi</label>
+                                        <div class="mt-2 w-[60%]">
+                                            <div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                <input type="text" name="jumlah_transaksi_zeolite" value="<?= count($transactionZeolite) ?>" readonly class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-center w-full">
+                                        <label for="" class="block text-sm font-medium leading-6 text-gray-900">Jumlah Pendapatan</label>
+                                        <div class="mt-2 w-[60%]">
+                                            <div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                <input type="text" name="jumlah_pendapatan_zeolite" value="<?= $totalPendapatanZeolite['total_semua'] ?>" readonly class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="kanan w-[50%]">
+                                    <div class="flex justify-between items-center w-full">
+                                        <label for="" class="block text-sm font-medium leading-6 text-gray-900">Jenis Batu
+                                        </label>
+                                        <div class="mt-2 w-[70%]">
+                                            <div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                <input type="text" name="jenis_batu_balok" value="Balok" class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-center w-full">
+                                        <label for="" class="block text-sm font-medium leading-6 text-gray-900">Jumlah Batu Terjual</label>
+                                        <div class="mt-2 w-[60%]">
+                                            <div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                <input type="text" name="batu_terjual_balok" value="<?= $totalTerjualBalok['jumlah_batu'] ?>" readonly class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-center w-full">
+                                        <label for="" class="block text-sm font-medium leading-6 text-gray-900">Jumlah Transaksi</label>
+                                        <div class="mt-2 w-[60%]">
+                                            <div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                <input type="text" name="jumlah_transaksi_balok" value="<?= count($transactionBalok) ?>" readonly class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-center w-full">
+                                        <label for="" class="block text-sm font-medium leading-6 text-gray-900">Jumlah Pendapatan</label>
+                                        <div class="mt-2 w-[60%]">
+                                            <div class="flex rounded-md shadow-sm border-[1.5px] ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                                <input type="text" name="jumlah_pendapatan_balok" value="<?= $totalPendapatanBalok['total_semua'] ?>" readonly class="block flex-1 border-0 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- Def -->
-            <div class="border-2 p-5 border-black">
-                <div>
-                    <label for="">Jenis Batu</label>
-                    <input type="text" name="jenis_batu_balok" value="Balok">
-                </div>
-                <div>
-                    <label for="">Jumlah Batu Terjual</label>
-                    <input type="text" name="batu_terjual_balok" value="<?= $totalTerjualBalok['jumlah_batu'] ?>" readonly>
-                </div>
-                <div>
-                    <label for="">Jumlah Transaksi</label>
-                    <input type="text" name="jumlah_transaksi_balok" value="<?= count($transactionBalok) ?>" readonly>
-                </div>
-                <div>
-                    <label for="">Jumlah Pendapatan</label>
-                    <input type="text" name="jumlah_pendapatan_balok" value="<?= $totalPendapatanBalok['total_semua'] ?>" readonly>
-                </div>
+            <div class="flex items-center justify-end gap-x-6">
+                <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
+                    <a href="http://localhost/web-rpl/resources/views/dashboard/laporan/">Cancel</a>
+                </button>
+                <button name="create_customer" type="submit" class="btn btn-primary btn-md rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    Buat Laporan
+                </button>
             </div>
-        </div>
-        <div>
-            <button>Buat Laporan</button>
         </div>
     </form>
 </body>
